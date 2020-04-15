@@ -38,7 +38,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<update id="edit" parameterType="Student">
-		update t_stu set stuNo=#{stuNo},stuName=#{stuName},gender=#{gender},age=#{age},college=#{college},major=#{major},clazz=#{clazz},dormNo=#{dormNo},floorNo=#{floorNo},password=#{password} where id=#{id}
+		update t_stu
+		<set>
+			<if test="stuNo!=null">
+				stuNo=#{stuNo},
+			</if>
+			<if test="stuName!=null">
+				stuName=#{stuName},
+			</if>
+			<if test="gender!=null">
+				gender=#{gender},
+			</if>
+			<if test="age!=null">
+				age=#{age},
+			</if>
+			<if test="college!=null">
+				college=#{college},
+			</if>
+			<if test="major!=null">
+				major=#{major},
+			</if>
+			<if test="clazz!=null">
+				clazz=#{clazz},
+			</if>
+			<if test="dormNo!=null">
+				dormNo=#{dormNo},
+			</if>
+			<if test="floorNo!=null">
+				floorNo=#{floorNo},
+			</if>
+			<if test="password!=null">
+				password=#{password}
+			</if>
+		</set>
+		where id=#{id}
 	</update>
 
 	<update id="delete" parameterType="long">

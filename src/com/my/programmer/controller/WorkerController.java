@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,13 +35,21 @@ public class WorkerController {
     public Map<String,Object> getList(
             @RequestParam(value = "name",defaultValue = "",required = false)String name,
             @RequestParam(value = "workNo",defaultValue = "",required = false)String workNo,
+            HttpServletRequest request,
             Page page
     ) {
+        String userType = (String) request.getSession().getAttribute("userType");
         Map<String,Object> ret = new HashMap<>();
         Map<String,Object> queryMap = new HashMap<>();
         //%%表示查询所有用户
-        queryMap.put("name","%"+name+"%");
-        queryMap.put("workNo","%"+workNo+"%");
+        if(userType.equals("3")){
+            Worker worker = (Worker) request.getSession().getAttribute("user");
+            queryMap.put("name","%"+worker.getName()+"%");
+            queryMap.put("workNo","%"+worker.getWorkNo()+"%");
+        }else {
+            queryMap.put("name","%"+name+"%");
+            queryMap.put("workNo","%"+workNo+"%");
+        }
         //分页偏移量
         queryMap.put("offset",page.getOffset());
         //每页显示的记录条数
@@ -97,40 +106,45 @@ public class WorkerController {
 
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,String> edit(Worker worker){
+    public Map<String,String> edit(Worker worker,HttpServletRequest request){
         Map<String,String> ret = new HashMap<>();
+        String userType = (String) request.getSession().getAttribute("userType");
         if(worker==null){
             ret.put("type","error");
             ret.put("msg","数据绑定出错,请联系开发者");
             return  ret;
         }
-        if(StringUtils.isEmpty(worker.getWorkNo())){
-            ret.put("type","error");
-            ret.put("msg","工号不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(worker.getName())){
-            ret.put("type","error");
-            ret.put("msg","姓名不能为空");
-            return  ret;
-        }
-        if(worker.getAge()==null){
-            ret.put("type","error");
-            ret.put("msg","年龄不能为空");
-            return  ret;
+        if(userType.equals("1")){
+            if(StringUtils.isEmpty(worker.getWorkNo())){
+                ret.put("type","error");
+                ret.put("msg","工号不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(worker.getName())){
+                ret.put("type","error");
+                ret.put("msg","姓名不能为空");
+                return  ret;
+            }
+            if(worker.getAge()==null){
+                ret.put("type","error");
+                ret.put("msg","年龄不能为空");
+                return  ret;
+            }
         }
         if(StringUtils.isEmpty(worker.getPassword())){
             ret.put("type","error");
             ret.put("msg","密码不能为空");
             return  ret;
         }
-        Worker existsWorker = workerService.findByWorkNo(worker.getWorkNo());
-        if(existsWorker!=null){
-            //2、再将查到的那条记录的ID与修改框中回显的ID进行比对，如果ID不同，表示用户输入的工号已经被使用了
-            if(existsWorker.getId()!=worker.getId()){
-                ret.put("type","error");
-                ret.put("msg","该用户已存在");
-                return ret;
+        if(userType.equals("1")){
+            Worker existsWorker = workerService.findByWorkNo(worker.getWorkNo());
+            if(existsWorker!=null){
+                //2、再将查到的那条记录的ID与修改框中回显的ID进行比对，如果ID不同，表示用户输入的工号已经被使用了
+                if(existsWorker.getId()!=worker.getId()){
+                    ret.put("type","error");
+                    ret.put("msg","该用户已存在");
+                    return ret;
+                }
             }
         }
         if(workerService.edit(worker)<=0){

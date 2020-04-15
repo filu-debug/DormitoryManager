@@ -58,11 +58,11 @@ public class StudentController {
             Page page
     ) {
         String userType = (String) request.getSession().getAttribute("userType");
-        Student student = (Student) request.getSession().getAttribute("user");
         Map<String,Object> ret = new HashMap<>();
         Map<String,Object> queryMap = new HashMap<>();
         //%%表示查询所有用户
         if("2".equals(userType)){
+            Student student = (Student) request.getSession().getAttribute("user");
             queryMap.put("stuNo","%"+student.getStuNo()+"%");
             queryMap.put("stuName","%"+student.getStuName()+"%");
         }else {
@@ -185,82 +185,87 @@ public class StudentController {
     @Transactional//启用事务
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,String> edit(Student student){
+    public Map<String,String> edit(Student student,HttpServletRequest request){
+        String userType = (String) request.getSession().getAttribute("userType");
         Map<String,String> ret = new HashMap<>();
         if(student==null){
             ret.put("type","error");
             ret.put("msg","数据绑定出错,请联系开发者");
             return  ret;
         }
-        if(!floorService.findByFloorNo(student.getFloorNo()).getFloorType().contains(student.getGender())){
-            ret.put("type","error");
-            ret.put("msg","寝室类型不对");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(student.getStuNo())){
-            ret.put("type","error");
-            ret.put("msg","学号不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(student.getStuName())){
-            ret.put("type","error");
-            ret.put("msg","姓名不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(student.getCollege())){
-            ret.put("type","error");
-            ret.put("msg","学院不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(student.getMajor())){
-            ret.put("type","error");
-            ret.put("msg","专业不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(student.getClazz())){
-            ret.put("type","error");
-            ret.put("msg","班级不能为空");
-            return  ret;
+        if(userType.equals("1")){
+            if(!floorService.findByFloorNo(student.getFloorNo()).getFloorType().contains(student.getGender())){
+                ret.put("type","error");
+                ret.put("msg","寝室类型不对");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(student.getStuNo())){
+                ret.put("type","error");
+                ret.put("msg","学号不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(student.getStuName())){
+                ret.put("type","error");
+                ret.put("msg","姓名不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(student.getCollege())){
+                ret.put("type","error");
+                ret.put("msg","学院不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(student.getMajor())){
+                ret.put("type","error");
+                ret.put("msg","专业不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(student.getClazz())){
+                ret.put("type","error");
+                ret.put("msg","班级不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(student.getFloorNo())){
+                ret.put("type","error");
+                ret.put("msg","楼栋不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(student.getDormNo())){
+                ret.put("type","error");
+                ret.put("msg","宿舍不能为空");
+                return  ret;
+            }
         }
         if(StringUtils.isEmpty(student.getPassword())){
             ret.put("type","error");
             ret.put("msg","密码不能为空");
             return  ret;
         }
-        if(StringUtils.isEmpty(student.getFloorNo())){
-            ret.put("type","error");
-            ret.put("msg","楼栋不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(student.getDormNo())){
-            ret.put("type","error");
-            ret.put("msg","宿舍不能为空");
-            return  ret;
-        }
-        Student exisStudent = studentService.findByStuNo(student.getStuNo());
-        if(exisStudent!=null){
-            if(student.getId()!=exisStudent.getId()){
-                ret.put("type","error");
-                ret.put("msg","该学生已存在");
-                return ret;
-            }
-        }
-        Map<String,Object> bedMap = new HashMap<>();
-        bedMap.put("dormNo",student.getDormNo());
-        bedMap.put("floorNo",student.getFloorNo());
-
-        //只有想更换的寝室与当前寝室在同一栋楼，且寝室编号不一样的情况下，才会去考虑寝室床位问题
-        if(exisStudent.getFloorNo()==student.getFloorNo()&&exisStudent.getDormNo()!=student.getDormNo()){
-            Integer liveCount = studentService.liveCount(bedMap);
-            bedMap.put("stayCount",liveCount+1);
-            Integer bedCount = dormiService.getBedCount(bedMap);
-            if(liveCount!=null){
-                if(liveCount==bedCount){
+        if(userType.equals("1")){
+            Student exisStudent = studentService.findByStuNo(student.getStuNo());
+            if(exisStudent!=null){
+                if(student.getId()!=exisStudent.getId()){
                     ret.put("type","error");
-                    ret.put("msg","该宿舍没有空床位了");
+                    ret.put("msg","该学生已存在");
                     return ret;
                 }
-                studentService.setStayCount(bedMap);
+            }
+            Map<String,Object> bedMap = new HashMap<>();
+            bedMap.put("dormNo",student.getDormNo());
+            bedMap.put("floorNo",student.getFloorNo());
+
+            //只有想更换的寝室与当前寝室在同一栋楼，且寝室编号不一样的情况下，才会去考虑寝室床位问题
+            if(exisStudent.getFloorNo()==student.getFloorNo()&&exisStudent.getDormNo()!=student.getDormNo()){
+                Integer liveCount = studentService.liveCount(bedMap);
+                bedMap.put("stayCount",liveCount+1);
+                Integer bedCount = dormiService.getBedCount(bedMap);
+                if(liveCount!=null){
+                    if(liveCount==bedCount){
+                        ret.put("type","error");
+                        ret.put("msg","该宿舍没有空床位了");
+                        return ret;
+                    }
+                    studentService.setStayCount(bedMap);
+                }
             }
         }
         if(studentService.edit(student)<=0){

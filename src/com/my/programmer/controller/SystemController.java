@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.my.programmer.entity.Student;
+import com.my.programmer.entity.Worker;
 import com.my.programmer.service.StudentService;
+import com.my.programmer.service.WorkerService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -36,6 +38,9 @@ public class SystemController {
 
 	@Autowired
 	StudentService studentService;
+
+	@Autowired
+	WorkerService workerService;
 
 	@RequestMapping("/index")
 	public ModelAndView index(ModelAndView model) {
@@ -103,7 +108,7 @@ public class SystemController {
 		
 		
 		//去数据库中查找用户
-		if(type .equals("1")) {
+		if(type.equals("1")) {
 			//type==1就是管理员
 			
 			//将用户输入的用户名，传给此方法的形参
@@ -123,11 +128,9 @@ public class SystemController {
 			//走到这里，表示密码正确,可以将当前用户存入session会话对象中
 			request.getSession().setAttribute("user", user);
 		}
-		if(type .equals("2")) {
+		if(type.equals("2")) {
 			//学生
-			Student student = new Student();
-			student.setStuNo(username);
-			Student studentexists = studentService.findByStuNo(student.getStuNo());
+			Student studentexists = studentService.findByStuNo(username);
 			if(studentexists==null) {
 				ret.put("type", "error");
 				ret.put("msg", "不存在该学生");
@@ -142,10 +145,24 @@ public class SystemController {
 			//走到这里，表示密码正确,可以将当前用户存入session会话对象中
 			request.getSession().setAttribute("user", studentexists);
 		}
-		if(type .equals("3")) {
+		if(type.equals("3")) {
 			//工人
+			Worker workexists = workerService.findByWorkNo(username);
+			if(workexists==null) {
+				ret.put("type", "error");
+				ret.put("msg", "不存在该工人");
+				return ret;
+			}
+			//如果用户提供的密码，与数据库中返回的密码不一致，就表示密码不正确
+			if(!password.equals(workexists.getPassword())){
+				ret.put("type", "error");
+				ret.put("msg", "密码错误");
+				return ret;
+			}
+			//走到这里，表示密码正确,可以将当前用户存入session会话对象中
+			request.getSession().setAttribute("user", workexists);
 		}
-		if(type .equals("4")) {
+		if(type.equals("4")) {
 			//宿管
 		}
 		

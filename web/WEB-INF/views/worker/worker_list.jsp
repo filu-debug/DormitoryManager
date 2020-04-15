@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -168,8 +169,14 @@
 	  	//编辑工人信息
 	  	$("#editDialog").dialog({
 	  		title: "修改工人信息",
+			<c:if test="${userType=='1'}">
 	    	width: 350,
 	    	height: 350,
+			</c:if>
+			<c:if test="${userType=='3'}">
+			width: 350,
+			height: 150,
+			</c:if>
 	    	iconCls: "icon-edit",
 	    	modal: true,
 	    	collapsible: false,
@@ -247,17 +254,20 @@
 	</table> 
 	<!-- 工具栏 -->
 	<div id="toolbar">
+		<c:if test="${userType=='1'}">
 		<div style="float: left;"><a id="add" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a></div>
 			<div style="float: left;" class="datagrid-btn-separator"></div>
+		</c:if>
 		<div style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a></div>
 			<div style="float: left;" class="datagrid-btn-separator"></div>
+		<c:if test="${userType=='1'}">
 		<div>
 			<a id="delete" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-some-delete',plain:true">删除</a>
 			工人名：<input id="search-name" class="easyui-textbox"/>
 			工号：<input id="search-workNo" class="easyui-textbox"/>
 			<a id="search-btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 		</div>
-
+		</c:if>
 	</div>
 	
 	<!-- 添加窗口 -->
@@ -294,6 +304,7 @@
     	<form id="editForm" method="post">
 			<input type="hidden" name="id" id="edit-id">
 	    	<table id="editTable" cellpadding="8" >
+				<c:if test="${userType=='1'}">
 				<tr>
 					<td>工号:</td>
 					<td ><input id="edit_workNo" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="workNo" data-options="required:true, missingMessage:'请填写工号'" /></td>
@@ -310,6 +321,7 @@
 					<td>性别:</td>
 					<td><select id="edit_gender" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="gender"><option value="男" selected>男</option><option value="女">女</option></select></td>
 				</tr>
+				</c:if>
 				<tr>
 					<td>密码:</td>
 					<td><input id="edit_password" style="width: 200px; height: 30px;" class="easyui-textbox" type="password" name="password" data-options="required:true, missingMessage:'请填写密码'" /></td>

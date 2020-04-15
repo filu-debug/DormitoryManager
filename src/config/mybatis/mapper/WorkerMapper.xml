@@ -26,7 +26,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="edit" parameterType="Worker">
-		update t_worker set name = #{name},password = #{password},workNo = #{workNo},age = #{age},gender = #{gender} where id=#{id}
+		update t_worker
+		<set>
+			<if test="name!=null">
+				name = #{name},
+			</if>
+			<if test="password!=null">
+				password = #{password},
+			</if>
+			<if test="workNo!=null">
+				workNo = #{workNo},
+			</if>
+			<if test="age!=null">
+				age = #{age},
+			</if>
+			<if test="gender!=null">
+				gender = #{gender}
+			</if>
+		</set>
+		 where id=#{id}
 	</update>
 
 	<update id="delete" parameterType="long">
