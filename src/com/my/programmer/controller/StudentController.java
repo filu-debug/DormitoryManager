@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,20 +54,33 @@ public class StudentController {
     public Map<String,Object> getList(
             @RequestParam(value = "stuNo",defaultValue = "",required = false)String stuNo,
             @RequestParam(value = "stuName",defaultValue = "",required = false)String stuName,
+            HttpServletRequest request,
             Page page
     ) {
+        String userType = (String) request.getSession().getAttribute("userType");
+        Student student = (Student) request.getSession().getAttribute("user");
         Map<String,Object> ret = new HashMap<>();
         Map<String,Object> queryMap = new HashMap<>();
         //%%表示查询所有用户
-        queryMap.put("stuNo","%"+stuNo+"%");
-        queryMap.put("stuName","%"+stuName+"%");
+        if("2".equals(userType)){
+            queryMap.put("stuNo","%"+student.getStuNo()+"%");
+            queryMap.put("stuName","%"+student.getStuName()+"%");
+        }else {
+            queryMap.put("stuNo","%"+stuNo+"%");
+            queryMap.put("stuName","%"+stuName+"%");
+        }
         //分页偏移量
         queryMap.put("offset",page.getOffset());
         //每页显示的记录条数
         queryMap.put("pageSize",page.getRows());
         //rows保存查询到的列表
         //easyui根据rows和total自动计算分页数量
-        ret.put("rows",studentService.findList(queryMap));
+        if("2".equals(userType)){
+            ret.put("rows",studentService.findList(queryMap));
+        }else {
+
+            ret.put("rows",studentService.findList(queryMap));
+        }
         ret.put("total",studentService.getTotal(queryMap));
         return ret;
     }

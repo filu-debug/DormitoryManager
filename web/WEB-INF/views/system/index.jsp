@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>学生宿舍管理系统 管理员后台</title>
+    <c:if test="${userType==1}">
+        <title>学生宿舍管理系统 管理员后台</title>
+    </c:if>
+    <c:if test="${userType!=1}">
+        <title>学生宿舍管理系统</title>
+    </c:if>
     <link rel="shortcut icon" href="favicon.ico"/>
 	<link rel="bookmark" href="favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="../easyui/css/default.css" />
@@ -13,6 +19,8 @@
     <script type="text/javascript" src="../easyui/jquery.min.js"></script>
     <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src='../easyui/js/outlook2.js'> </script>
+    <%--管理员列表页--%>
+    <c:if test="${userType=='1'}">
     <script type="text/javascript">
 	 var _menus = {"menus":[
 						{"menuid":"1","icon":"","menuname":"楼宇管理",
@@ -54,6 +62,25 @@
 
 
     </script>
+    </c:if>
+    <%--学生列表页--%>
+    <c:if test="${userType=='2'}">
+        <script type="text/javascript">
+            var _menus = {"menus":[
+                    {"menuid":"2","icon":"","menuname":"个人",
+                        "menus":[
+                            {"menuid":"21","menuname":"我的信息","icon":"icon-user-student","url":"../student/list"},
+                        ]
+                    },
+                    {"menuid":"7","icon":"","menuname":"报修",
+                        "menus":[
+                            {"menuid":"51","menuname":"报修申请","icon":"icon-set","url":"../repai/list"},
+                        ]
+                    }
+                ]};
+
+        </script>
+    </c:if>
 
 </head>
 <body class="easyui-layout" style="overflow-y: hidden"  scroll="no">
@@ -65,7 +92,12 @@
     <div region="north" split="true" border="false" style="overflow: hidden; height: 30px;
         background: url(images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
         line-height: 20px;color: #fff; font-family: Verdana, 微软雅黑,黑体">
+        <c:if test="${userType=='1'}">
         <span style="float:right; padding-right:20px;" class="head"><span style="color:red; font-weight:bold;">${user.username}&nbsp;</span>您好&nbsp;&nbsp;&nbsp;<a href="SystemServlet?method=LoginOut" id="loginOut">安全退出</a></span>
+        </c:if>
+        <c:if test="${userType=='2'}">
+            <span style="float:right; padding-right:20px;" class="head"><span style="color:red; font-weight:bold;">${user.stuName}&nbsp;</span>您好&nbsp;&nbsp;&nbsp;<a href="SystemServlet?method=LoginOut" id="loginOut">安全退出</a></span>
+        </c:if>
         <span style="padding-left:10px; font-size: 16px; ">学生宿舍管理系统</span>
     </div>
     <div region="south" split="true" style="height: 30px; background: #D2E0F2; ">

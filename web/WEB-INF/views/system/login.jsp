@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -65,6 +66,7 @@
 			radioClass: 'iradio-blue',
 			increaseArea: '25%'
 		});
+
 	})
 </script> 
 <title>登录|学生宿舍管理系统</title>
@@ -81,7 +83,7 @@
       <div class="row cl">
         <label class="form-label col-3"><i class="Hui-iconfont">&#xe60d;</i></label>
         <div class="formControls col-8">
-          <input id="username" name="username" type="text" placeholder="账户" value="admin" class="input-text size-L">
+          <input id="username" name="username" type="text" placeholder="非管理员请以学号或工号登录"  value="admin" class="input-text size-L">
         </div>
       </div>
       <div class="row cl">
@@ -98,13 +100,17 @@
       </div>
       
       <div class="mt-20 skin-minimal" style="text-align: center;">
-		<div class="radio-box">
-			<input type="radio" id="radio-2" name="type" value="2"  />
-			<label for="radio-1">学生</label>
-		</div>
+      <div class="radio-box">
+          <input type="radio" id="radio-4" name="type" value="4"  />
+          <label for="radio-1">宿管</label>
+      </div>
 		<div class="radio-box">
 			<input type="radio" id="radio-3" name="type" value="3" />
 			<label for="radio-2">工人</label>
+		</div>
+		<div class="radio-box">
+			<input type="radio" id="radio-2" name="type" value="2"  />
+			<label for="radio-1">学生</label>
 		</div>
 		<div class="radio-box">
 			<input type="radio" id="radio-1" name="type" value="1" checked/>

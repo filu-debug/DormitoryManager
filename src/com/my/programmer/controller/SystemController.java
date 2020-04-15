@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.my.programmer.entity.Student;
+import com.my.programmer.service.StudentService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -31,8 +33,10 @@ public class SystemController {
 	//获取UserService对象
 	@Autowired
 	private UserService userService;
-	
-	
+
+	@Autowired
+	StudentService studentService;
+
 	@RequestMapping("/index")
 	public ModelAndView index(ModelAndView model) {
 		//寻找/WEB-INF/views/system路径下的index.jsp文件(自动拼上.jsp后缀)
@@ -62,7 +66,7 @@ public class SystemController {
 			@RequestParam(value = "username",required = true)String username,
 			@RequestParam(value = "password",required = true)String password,
 			@RequestParam(value = "vcode",required = true)String vcode,
-			@RequestParam(value = "type",required = true)int type,
+			@RequestParam(value = "type",required = true)String type,
 			HttpServletRequest request
 			) {
 		Map<String, String> ret = new HashedMap();
@@ -99,7 +103,7 @@ public class SystemController {
 		
 		
 		//去数据库中查找用户
-		if(type == 1) {
+		if(type .equals("1")) {
 			//type==1就是管理员
 			
 			//将用户输入的用户名，传给此方法的形参
@@ -119,14 +123,33 @@ public class SystemController {
 			//走到这里，表示密码正确,可以将当前用户存入session会话对象中
 			request.getSession().setAttribute("user", user);
 		}
-		if(type==2) {
+		if(type .equals("2")) {
 			//学生
+			Student student = new Student();
+			student.setStuNo(username);
+			Student studentexists = studentService.findByStuNo(student.getStuNo());
+			if(studentexists==null) {
+				ret.put("type", "error");
+				ret.put("msg", "不存在该学生");
+				return ret;
+			}
+			//如果用户提供的密码，与数据库中返回的密码不一致，就表示密码不正确
+			if(!password.equals(studentexists.getPassword())){
+				ret.put("type", "error");
+				ret.put("msg", "密码错误");
+				return ret;
+			}
+			//走到这里，表示密码正确,可以将当前用户存入session会话对象中
+			request.getSession().setAttribute("user", studentexists);
 		}
-		if(type==3) {
+		if(type .equals("3")) {
 			//工人
 		}
+		if(type .equals("4")) {
+			//宿管
+		}
 		
-		
+		request.getSession().setAttribute("userType",type);
 		ret.put("type", "success");
 		ret.put("msg", "登录成功!");
 		return ret;

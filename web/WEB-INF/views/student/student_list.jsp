@@ -16,8 +16,13 @@
 		var table;
 		
 		//datagrid初始化 (easyui框架函数，将后台数据填充到ID为dataList的table中)
-	    $('#dataList').datagrid({ 
+	    $('#dataList').datagrid({
+			<c:if test="${userType=='1'}">
 	        title:'学生列表',
+			</c:if>
+			<c:if test="${userType=='2'}">
+			title:'个人信息',
+			</c:if>
 	        iconCls:'icon-more',//图标 
 	        border: true, 
 	        collapsible:false,//是否可折叠的 
@@ -181,8 +186,14 @@
 	  	//编辑学生信息
 	  	$("#editDialog").dialog({
 	  		title: "修改学生信息",
+			<c:if test="${userType=='1'}">
 	    	width: 400,
 	    	height: 580,
+			</c:if>
+			<c:if test="${userType=='2'}">
+			width: 330,
+			height: 200,
+			</c:if>
 	    	iconCls: "icon-edit",
 	    	modal: true,
 	    	collapsible: false,
@@ -276,16 +287,22 @@
 	</table> 
 	<!-- 工具栏 -->
 	<div id="toolbar">
+		<%--是管理员才显示添加按钮--%>
+		<c:if test="${userType=='1'}">
 		<div style="float: left;"><a id="add" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a></div>
 			<div style="float: left;" class="datagrid-btn-separator"></div>
+		</c:if>
 		<div style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a></div>
 			<div style="float: left;" class="datagrid-btn-separator"></div>
+		<%--只有管理员才可以使用搜索和删除功能--%>
+		<c:if test="${userType=='1'}">
 		<div>
 			<a id="delete" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-some-delete',plain:true">删除</a>
 			学号：<input id="search-stuNo" class="easyui-textbox"/>
 			姓名：<input id="search-stuName" class="easyui-textbox"/>
 			<a id="search-btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 		</div>
+		</c:if>
 
 	</div>
 	
@@ -369,7 +386,7 @@
     	<form id="editForm" method="post">
 			<input type="hidden" name="id" id="edit-id">
 	    	<table id="editTable" cellpadding="8" >
-
+				<c:if test="${userType=='1'}">
 				<tr>
 					<td>学号:</td>
 					<td><input id="edit_stuNo" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="stuNo" data-options="required:true, missingMessage:'请填写学生学号'" /></td>
@@ -419,6 +436,7 @@
 						</select>
 					</td>
 				</tr>
+				</c:if>
 				<tr>
 					<td>密码:</td>
 					<td><input id="edit_password" style="width: 200px; height: 30px;" class="easyui-textbox" type="password" name="password" data-options="required:true, missingMessage:'请填写密码'" /></td>
