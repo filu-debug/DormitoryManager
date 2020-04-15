@@ -16,8 +16,13 @@
 		var table;
 		
 		//datagrid初始化 (easyui框架函数，将后台数据填充到ID为dataList的table中)
-	    $('#dataList').datagrid({ 
+	    $('#dataList').datagrid({
+			<c:if test="${userType=='1'}">
 	        title:'工人列表',
+			</c:if>
+			<c:if test="${userType=='3'}">
+			title:'工人个人信息',
+			</c:if>
 	        iconCls:'icon-more',//图标 
 	        border: true, 
 	        collapsible:false,//是否可折叠的 
