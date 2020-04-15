@@ -43,9 +43,8 @@ public class StudentController {
         //寻找/WEB-INF/views/system路径下的index.jsp文件(自动拼上.jsp后缀)
         model.setViewName("student/student_list");
         model.addObject("dormList",dormiService.findAll());
-        model.addObject("floorList",floorService.findAll());
-        model.addObject("boyFloors",floorService.getBoyDorms());
-        model.addObject("girlDorms",floorService.getGrilDorms());
+        /*model.addObject("boyFloors",floorService.getBoyDorms());
+        model.addObject("girlDorms",floorService.getGrilDorms());*/
         return model;
     }
 

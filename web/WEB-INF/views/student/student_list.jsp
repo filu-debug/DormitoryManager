@@ -340,8 +340,8 @@
 					<td>所属楼栋:</td>
 					<td>
 						<select id="add_floorNo" style="width:200px;" class="easyui-combobox" name="floorNo" data-options="required:true, missingMessage:'请选择所属楼栋'" >
-							<c:forEach items="${floorList}" var="floor">
-								<option>${floor.floorNo}</option>
+							<c:forEach items="${dormList}" var="dorm">
+								<option>${dorm.floorNo}</option>
 							</c:forEach>
 							<%--<c:if test="${dormType.equals('男')}">
 								<c:forEach items="${boyFloors}" var="floor">
@@ -413,8 +413,8 @@
 					<td>所属楼栋:</td>
 					<td>
 						<select id="edit_floorNo" style="width:200px;" class="easyui-combobox" name="floorNo" data-options="required:true, missingMessage:'请选择所属楼栋'" >
-							<c:forEach items="${floorList}" var="floor">
-								<option>${floor.floorNo}</option>
+							<c:forEach items="${dormList}" var="dorm">
+								<option>${dorm.floorNo}</option>
 							</c:forEach>
 						</select>
 					</td>
