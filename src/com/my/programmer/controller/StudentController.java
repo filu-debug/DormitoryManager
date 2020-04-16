@@ -153,6 +153,16 @@ public class StudentController {
             ret.put("msg","宿舍不能为空");
             return  ret;
         }
+        if(StringUtils.isEmpty(student.getPhone())){
+            ret.put("type","error");
+            ret.put("msg","电话不能为空");
+            return  ret;
+        }
+        if((studentService.findByPhone(student.getPhone()))!=null){
+            ret.put("type","error");
+            ret.put("msg","该号码已存在");
+            return ret;
+        }
         if((studentService.findByStuNo(student.getStuNo()))!=null){
             ret.put("type","error");
             ret.put("msg","该学生已存在");
@@ -234,6 +244,16 @@ public class StudentController {
                 ret.put("msg","宿舍不能为空");
                 return  ret;
             }
+        }
+        if(StringUtils.isEmpty(student.getPhone())){
+            ret.put("type","error");
+            ret.put("msg","电话不能为空");
+            return  ret;
+        }
+        if((studentService.findByPhone(student.getPhone()))!=null){
+            ret.put("type","error");
+            ret.put("msg","该号码已存在");
+            return ret;
         }
         if(StringUtils.isEmpty(student.getPassword())){
             ret.put("type","error");

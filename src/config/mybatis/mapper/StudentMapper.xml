@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="add" parameterType="Student">
-		insert into t_stu(stuNo,stuName,gender,age,college,major,clazz,dormNo,floorNo,password) values(#{stuNo},#{stuName},#{gender},#{age},#{college},#{major},#{clazz},#{dormNo},#{floorNo},#{password})
+		insert into t_stu(stuNo,stuName,gender,age,college,major,clazz,dormNo,floorNo,password,phone) values(#{stuNo},#{stuName},#{gender},#{age},#{college},#{major},#{clazz},#{dormNo},#{floorNo},#{password},#{phone})
 	</update>
 
 	<select id="findList" parameterType="Map" resultType="Student">
@@ -67,6 +67,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="floorNo!=null">
 				floorNo=#{floorNo},
 			</if>
+			<if test="phone!=null">
+				phone=#{phone},
+			</if>
 			<if test="password!=null">
 				password=#{password}
 			</if>
@@ -85,6 +88,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="subStayCount" parameterType="Map" >
 		update t_dormitory set stayCount = stayCount-1 where dormNo = #{dormNo} and floorNo = #{floorNo}
 	</update>
+
+	<select id="findByPhone" parameterType="String" resultType="Student">
+		select * from t_stu where phone = #{phone}
+	</select>
 
 
 

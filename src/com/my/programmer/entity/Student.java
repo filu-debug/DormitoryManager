@@ -16,6 +16,15 @@ public class Student {
     private String dormNo;
     private String floorNo;
     private String password;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public Long getId() {
         return id;
@@ -119,6 +128,7 @@ public class Student {
                 ", dormNo='" + dormNo + '\'' +
                 ", floorNo='" + floorNo + '\'' +
                 ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }

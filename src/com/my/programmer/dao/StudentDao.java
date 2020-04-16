@@ -31,4 +31,6 @@ public interface StudentDao {
     public Student getDormNoById(long id);
 
     public void subStayCount(Map<String,Object> bedMap);
+
+    public Student findByPhone(String phone);
 }

@@ -77,17 +77,6 @@
 	&lt;!&ndash; 启动声明式事务驱动 &ndash;&gt;
 	<tx:annotation-driven transaction-manager="transactionManager" />-->
 
-	<!--配置事务的步骤:-->
-	<!--1、注册事务管理器，让其进行事务控制-->
-	<!--注册事务管理器（无论是基于注解的、还是基于xml的事务控制，这个事务管理器都是要注册的!!）-->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<!--关键：控制数据源，无论用什么方式进行事务管理，原生的、或者封装的，都得控制住数据源或者连接，才行。-->
-		<property name="dataSource" ref="dataSource"></property>
-	</bean>
-
-	<!--2、开启基于注解的事务控制模式，依赖tx名称空间,然后需要一个切面类(事务管理器)对象（即上面注册的那个bean）-->
-	<tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
-
 
 	<!-- spring 通过 sqlSessionFactoryBean 获取 sqlSessionFactory 工厂类 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

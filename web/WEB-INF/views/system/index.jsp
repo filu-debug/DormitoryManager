@@ -74,7 +74,7 @@
                     },
                     {"menuid":"7","icon":"","menuname":"报修",
                         "menus":[
-                            {"menuid":"51","menuname":"报修申请","icon":"icon-set","url":"../repai/list"},
+                            {"menuid":"51","menuname":"报修申请","icon":"icon-set","url":"../sturepai/list"},
                         ]
                     }
                 ]};
@@ -96,9 +96,9 @@
                         ]
                     }
                 ]};
-
         </script>
     </c:if>
+    <%--楼管列表页--%>
     <c:if test="${userType=='4'}">
         <script type="text/javascript">
             var _menus = {"menus":[
@@ -109,7 +109,7 @@
                     },
                     {"menuid":"7","icon":"","menuname":"报修管理",
                         "menus":[
-                            {"menuid":"51","menuname":"报修请求列表","icon":"icon-set","url":"../repai/list"},
+                            {"menuid":"51","menuname":"报修请求列表","icon":"icon-set","url":"../hprepai/list"},
                         ]
                     }
                 ]};

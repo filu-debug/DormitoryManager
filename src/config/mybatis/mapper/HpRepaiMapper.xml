@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 告诉xml文件，去找哪一个dao -->
+<mapper namespace="com.my.programmer.dao.HpRepaiDao">
+	
+	<select id="findByUserName" parameterType="String" resultType="User">
+		select * from t_user where username = #{username}
+	</select>
+
+	<update id="add" parameterType="StuRepai">
+		insert into t_hprepai(id,stuName,floorNo,dormNo,phone,retype,discr,state,starttime)
+		values(#{id},#{stuName},#{floorNo},#{dormNo},#{phone},#{retype},#{discr},#{state},#{starttime})
+	</update>
+
+	<select id="findList" parameterType="Map" resultType="StuRepai">
+		select * from t_hprepai where floorNo =#{floorNo} limit #{offset},#{pageSize}
+	</select>
+
+	<select id="getTotal" parameterType="Map" resultType="Integer">
+		select count(id) from t_hprepai where floorNo =#{floorNo}
+	</select>
+
+	<update id="edit" parameterType="User">
+		update t_user set username = #{username},password = #{password} where id=#{id}
+	</update>
+
+	<update id="setStuStateById" parameterType="long">
+		update t_sturepai set state="申请被拒绝" where id=#{id}
+	</update>
+	<update id="setHpStateById" parameterType="long">
+		update t_hprepai set state="已拒绝" where id=#{id}
+	</update>
+</mapper>

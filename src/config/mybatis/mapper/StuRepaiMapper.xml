@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 告诉xml文件，去找哪一个dao -->
+<mapper namespace="com.my.programmer.dao.StuRepaiDao">
+	
+	<select id="findByUserName" parameterType="String" resultType="User">
+		select * from t_user where username = #{username}
+	</select>
+
+	<update id="add" parameterType="StuRepai" useGeneratedKeys="true" keyProperty="id">
+		insert into t_sturepai(stuName,floorNo,dormNo,phone,retype,discr,state,starttime)
+		values(#{stuName},#{floorNo},#{dormNo},#{phone},#{retype},#{discr},#{state},#{starttime})
+	</update>
+
+	<select id="findList" parameterType="Map" resultType="StuRepai">
+		select * from t_sturepai
+		<where>
+			<if test="floorNo!=null">
+				floorNo=#{floorNo}
+			</if>
+			<if test="dormNo!=null">
+				and dormNo=#{dormNo}
+			</if>
+		</where>
+		limit #{offset},#{pageSize}
+	</select>
+
+	<select id="getTotal" parameterType="Map" resultType="Integer">
+		select count(id) from t_sturepai where floorNo=#{floorNo} and dormNo=#{dormNo}
+	</select>
+
+	<update id="edit" parameterType="User">
+		update t_user set username = #{username},password = #{password} where id=#{id}
+	</update>
+
+	<update id="delete" parameterType="long">
+		delete from t_user where id=#{id}
+	</update>
+</mapper>

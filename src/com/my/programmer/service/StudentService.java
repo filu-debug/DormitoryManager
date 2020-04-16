@@ -1,5 +1,6 @@
 package com.my.programmer.service;
 
+import com.my.programmer.entity.HouseParent;
 import com.my.programmer.entity.Student;
 import com.my.programmer.entity.User;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,7 @@ public interface StudentService {
     public Student getDormNoById(long id);
 
     public void subStayCount(Map<String,Object> bedMap);
+
+    public Student findByPhone(String phone);
 
 }

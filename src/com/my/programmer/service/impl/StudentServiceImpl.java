@@ -68,4 +68,9 @@ public class StudentServiceImpl implements StudentService {
     public void subStayCount(Map<String, Object> bedMap) {
         studentDao.subStayCount(bedMap);
     }
+
+    @Override
+    public Student findByPhone(String phone) {
+        return studentDao.findByPhone(phone);
+    }
 }
