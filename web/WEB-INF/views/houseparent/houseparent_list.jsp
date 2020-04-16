@@ -108,7 +108,7 @@
 	    $("#addDialog").dialog({
 	    	title: "添加楼管",
 	    	width: 350,
-	    	height: 350,
+	    	height: 380,
 	    	iconCls: "icon-add",
 	    	modal: true,
 	    	collapsible: false,
@@ -144,6 +144,7 @@
 										$("#add_name").textbox('setValue', "");
 										$("#add_gender").textbox('setValue', "男");
 										$("#add_phone").textbox('setValue', "");
+										$("#add_password").textbox('setValue', "");
 										//重新刷新页面数据
 							  			$('#dataList').datagrid("reload");
 										
@@ -163,6 +164,7 @@
 				$("#add_name").textbox('setValue', "");
 				$("#add_phone").textbox('setValue', "");
 				$("#add_gender").textbox('setValue', "男");
+				$("#add_password").textbox('setValue', "");
 			}
 	    });
 
@@ -171,7 +173,12 @@
 	  	$("#editDialog").dialog({
 	  		title: "修改楼栋信息",
 	    	width: 350,
-	    	height: 350,
+			<c:if test="${userType=='1'}">
+	    	height: 380,
+			</c:if>
+			<c:if test="${userType=='4'}">
+			height: 150,
+			</c:if>
 	    	iconCls: "icon-edit",
 	    	modal: true,
 	    	collapsible: false,
@@ -228,6 +235,7 @@
 				$("#edit_phone").textbox('setValue', selectRow.phone);
 				$("#edit_gender").textbox('setValue', selectRow.gender);
 				$("#edit_floorNo").textbox('setValue', selectRow.floorNo);
+				$("#edit_password").textbox('setValue', selectRow.password);
 			}
 	    });
 
@@ -235,6 +243,7 @@
 	  	$("#search-btn").on("click",function () {
 			$("#dataList").datagrid('reload',{
 				name:$("#search-name").val(),
+				workNo:$("#search-workNo").val()
 			});
 		});
 
@@ -279,15 +288,20 @@
 	</table> 
 	<!-- 工具栏 -->
 	<div id="toolbar">
+		<c:if test="${userType=='1'}">
 		<div style="float: left;"><a id="add" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a></div>
 			<div style="float: left;" class="datagrid-btn-separator"></div>
+		</c:if>
 		<div style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a></div>
 			<div style="float: left;" class="datagrid-btn-separator"></div>
+		<c:if test="${userType=='1'}">
 		<div>
 			<a id="delete" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-some-delete',plain:true">删除</a>
 			姓名：<input id="search-name" class="easyui-textbox"/>
+			工号：<input id="search-workNo" class="easyui-textbox"/>
 			<a id="search-btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 		</div>
+		</c:if>
 
 	</div>
 	
@@ -322,6 +336,10 @@
 						</select>
 					</td>
 				</tr>
+				<tr>
+					<td>密码:</td>
+					<td><input id="add_password" style="width: 200px; height: 30px;" class="easyui-textbox" type="password" name="password" data-options="required:true, missingMessage:'请填写密码'" /></td>
+				</tr>
 	    		
 	    	</table>
 	    </form>
@@ -332,7 +350,7 @@
     	<form id="editForm" method="post">
 			<input type="hidden" name="id" id="edit-id">
 	    	<table id="editTable" cellpadding="8" >
-
+				<c:if test="${userType=='1'}">
 				<tr>
 					<td>工号:</td>
 					<td ><input id="edit_workNo" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="workNo" data-options="required:true, missingMessage:'请填写工号'" /></td>
@@ -358,6 +376,11 @@
 							</c:forEach>
 						</select>
 					</td>
+				</tr>
+				</c:if>
+				<tr>
+					<td>密码:</td>
+					<td><input id="edit_password" style="width: 200px; height: 30px;" class="easyui-textbox" type="password" name="password" data-options="required:true, missingMessage:'请填写密码'" /></td>
 				</tr>
 	    	</table>
 	    </form>

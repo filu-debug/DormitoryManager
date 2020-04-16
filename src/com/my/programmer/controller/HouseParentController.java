@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,12 +38,23 @@ public class HouseParentController {
     @ResponseBody
     public Map<String,Object> getList(
             @RequestParam(value = "name",defaultValue = "",required = false)String name,
+            @RequestParam(value = "workNo",defaultValue = "",required = false)String workNo,
+            HttpServletRequest request,
             Page page
     ) {
+        String userType = (String) request.getSession().getAttribute("userType");
         Map<String,Object> ret = new HashMap<>();
         Map<String,Object> queryMap = new HashMap<>();
-        //%%表示查询所有用户
-        queryMap.put("name","%"+name+"%");
+        if(userType.equals("4")){
+            HouseParent houseParent = (HouseParent) request.getSession().getAttribute("user");
+            //%%表示查询所有用户
+            queryMap.put("name","%"+houseParent.getName()+"%");
+            queryMap.put("workNo","%"+houseParent.getWorkNo()+"%");
+        }else {
+            //%%表示查询所有用户
+            queryMap.put("name","%"+name+"%");
+            queryMap.put("workNo","%"+workNo+"%");
+        }
         //分页偏移量
         queryMap.put("offset",page.getOffset());
         //每页显示的记录条数
@@ -78,6 +90,11 @@ public class HouseParentController {
             ret.put("msg","电话不能为空");
             return  ret;
         }
+        if(houseParent.getPassword()==null){
+            ret.put("type","error");
+            ret.put("msg","密码不能为空");
+            return  ret;
+        }
         if((houseParentService.findByWorkNo(houseParent.getWorkNo()))!=null){
             ret.put("type","error");
             ret.put("msg","该楼管已存在");
@@ -106,41 +123,51 @@ public class HouseParentController {
 
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,String> edit(HouseParent houseParent){
+    public Map<String,String> edit(HouseParent houseParent, HttpServletRequest request){
+        String userType = (String) request.getSession().getAttribute("userType");
         Map<String,String> ret = new HashMap<>();
         if(houseParent==null){
             ret.put("type","error");
             ret.put("msg","数据绑定出错,请联系开发者");
             return  ret;
         }
-        if(StringUtils.isEmpty(houseParent.getWorkNo())){
-            ret.put("type","error");
-            ret.put("msg","工号不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(houseParent.getName())){
-            ret.put("type","error");
-            ret.put("msg","姓名不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(houseParent.getPhone())){
-            ret.put("type","error");
-            ret.put("msg","电话不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(houseParent.getFloorNo())){
-            ret.put("type","error");
-            ret.put("msg","负责楼栋不能为空");
-            return  ret;
-        }
-        //1、根据用户输入的工号查询数据库
-        HouseParent existsHp = houseParentService.findByWorkNo(houseParent.getWorkNo());
-        if(existsHp!=null){
-            //2、再将查到的那条记录的ID与修改框中回显的原用户的ID进行比对，如果ID不同，表示用户输入的工号已经被使用了
-            if(existsHp.getId()!=houseParent.getId()){
+        if(userType.equals("1")){
+            if(StringUtils.isEmpty(houseParent.getWorkNo())){
                 ret.put("type","error");
-                ret.put("msg","该楼管已存在");
-                return ret;
+                ret.put("msg","工号不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(houseParent.getName())){
+                ret.put("type","error");
+                ret.put("msg","姓名不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(houseParent.getPhone())){
+                ret.put("type","error");
+                ret.put("msg","电话不能为空");
+                return  ret;
+            }
+            if(StringUtils.isEmpty(houseParent.getFloorNo())){
+                ret.put("type","error");
+                ret.put("msg","负责楼栋不能为空");
+                return  ret;
+            }
+        }
+        if(StringUtils.isEmpty(houseParent.getPassword())){
+            ret.put("type","error");
+            ret.put("msg","密码不能为空");
+            return  ret;
+        }
+        if(userType.equals("1")){
+            //1、根据用户输入的工号查询数据库
+            HouseParent existsHp = houseParentService.findByWorkNo(houseParent.getWorkNo());
+            if(existsHp!=null){
+                //2、再将查到的那条记录的ID与修改框中回显的原用户的ID进行比对，如果ID不同，表示用户输入的工号已经被使用了
+                if(existsHp.getId()!=houseParent.getId()){
+                    ret.put("type","error");
+                    ret.put("msg","该楼管已存在");
+                    return ret;
+                }
             }
         }
         if(houseParentService.edit(houseParent)<=0){

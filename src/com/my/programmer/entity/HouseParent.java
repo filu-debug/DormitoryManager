@@ -9,8 +9,17 @@ public class HouseParent {
     private String name;
     private String phone;
     private String gender;
+    private String password;
     //负责楼栋
     private String floorNo;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
@@ -66,8 +75,9 @@ public class HouseParent {
                 "id=" + id +
                 ", workNo='" + workNo + '\'' +
                 ", name='" + name + '\'' +
-                ", phone=" + phone +
+                ", phone='" + phone + '\'' +
                 ", gender='" + gender + '\'' +
+                ", password='" + password + '\'' +
                 ", floorNo='" + floorNo + '\'' +
                 '}';
     }

@@ -99,6 +99,23 @@
 
         </script>
     </c:if>
+    <c:if test="${userType=='4'}">
+        <script type="text/javascript">
+            var _menus = {"menus":[
+                    {"menuid":"2","icon":"","menuname":"个人",
+                        "menus":[
+                            {"menuid":"21","menuname":"我的信息","icon":"icon-user-student","url":"../houseparent/list"},
+                        ]
+                    },
+                    {"menuid":"7","icon":"","menuname":"报修管理",
+                        "menus":[
+                            {"menuid":"51","menuname":"报修请求列表","icon":"icon-set","url":"../repai/list"},
+                        ]
+                    }
+                ]};
+
+        </script>
+    </c:if>
 
 </head>
 <body class="easyui-layout" style="overflow-y: hidden"  scroll="no">
@@ -117,6 +134,9 @@
             <span style="float:right; padding-right:20px;" class="head"><span style="color:red; font-weight:bold;">${user.stuName}&nbsp;</span>您好&nbsp;&nbsp;&nbsp;<a href="SystemServlet?method=LoginOut" id="loginOut">安全退出</a></span>
         </c:if>
         <c:if test="${userType=='3'}">
+            <span style="float:right; padding-right:20px;" class="head"><span style="color:red; font-weight:bold;">${user.name}&nbsp;</span>您好&nbsp;&nbsp;&nbsp;<a href="SystemServlet?method=LoginOut" id="loginOut">安全退出</a></span>
+        </c:if>
+        <c:if test="${userType=='4'}">
             <span style="float:right; padding-right:20px;" class="head"><span style="color:red; font-weight:bold;">${user.name}&nbsp;</span>您好&nbsp;&nbsp;&nbsp;<a href="SystemServlet?method=LoginOut" id="loginOut">安全退出</a></span>
         </c:if>
         <span style="padding-left:10px; font-size: 16px; ">学生宿舍管理系统</span>

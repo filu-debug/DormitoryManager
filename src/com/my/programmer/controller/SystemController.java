@@ -9,10 +9,10 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.my.programmer.entity.HouseParent;
 import com.my.programmer.entity.Student;
 import com.my.programmer.entity.Worker;
-import com.my.programmer.service.StudentService;
-import com.my.programmer.service.WorkerService;
+import com.my.programmer.service.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.programmer.entity.User;
-import com.my.programmer.service.UserService;
 import com.my.programmer.util.CpachaUtil;
 
 @RequestMapping("/system")
@@ -41,6 +40,9 @@ public class SystemController {
 
 	@Autowired
 	WorkerService workerService;
+
+	@Autowired
+	HouseParentService houseParentService;
 
 	@RequestMapping("/index")
 	public ModelAndView index(ModelAndView model) {
@@ -164,6 +166,20 @@ public class SystemController {
 		}
 		if(type.equals("4")) {
 			//宿管
+			HouseParent hpeists = houseParentService.findByWorkNo(username);
+			if(hpeists==null) {
+				ret.put("type", "error");
+				ret.put("msg", "不存在该楼管");
+				return ret;
+			}
+			//如果用户提供的密码，与数据库中返回的密码不一致，就表示密码不正确
+			if(!password.equals(hpeists.getPassword())){
+				ret.put("type", "error");
+				ret.put("msg", "密码错误");
+				return ret;
+			}
+			//走到这里，表示密码正确,可以将当前用户存入session会话对象中
+			request.getSession().setAttribute("user", hpeists);
 		}
 		
 		request.getSession().setAttribute("userType",type);

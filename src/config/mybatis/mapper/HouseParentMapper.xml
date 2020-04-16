@@ -10,19 +10,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="add" parameterType="HouseParent">
-		insert into t_hp(workNo,name,phone,gender,floorNo) values(#{workNo},#{name},#{phone},#{gender},#{floorNo})
+		insert into t_hp(workNo,name,phone,gender,floorNo,password) values(#{workNo},#{name},#{phone},#{gender},#{floorNo},#{password})
 	</update>
 
 	<select id="findList" parameterType="Map" resultType="HouseParent">
-		select * from t_hp where name like #{name} limit #{offset},#{pageSize}
+		select * from t_hp where name like #{name} and workNo like #{workNo} limit #{offset},#{pageSize}
 	</select>
 
 	<select id="getTotal" parameterType="Map" resultType="Integer">
-		select count(id) from t_hp where name like #{name}
+		select count(id) from t_hp where name like #{name} and workNo like #{workNo}
 	</select>
 
 	<update id="edit" parameterType="HouseParent">
-		update t_hp set workNo = #{workNo},name = #{name},phone = #{phone},gender=#{gender},floorNo=#{floorNo} where id=#{id}
+		update t_hp
+		<set>
+			<if test="workNo!=null">
+				workNo = #{workNo},
+			</if>
+			<if test="name!=null">
+				name = #{name},
+			</if>
+			<if test="phone!=null">
+				phone = #{phone},
+			</if>
+			<if test="gender!=null">
+				gender=#{gender},
+			</if>
+			<if test="floorNo!=null">
+				floorNo=#{floorNo},
+			</if>
+				password=#{password}
+			</set>
+		where id=#{id}
 	</update>
 
 	<update id="delete" parameterType="long">
