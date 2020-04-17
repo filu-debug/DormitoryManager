@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="add" parameterType="Worker">
-		insert into t_worker(workNo,name,age,gender,password) values(#{workNo},#{name},#{age},#{gender},#{password})
+		insert into t_worker(workNo,name,age,gender,password,phone) values(#{workNo},#{name},#{age},#{gender},#{password},#{phone})
 	</update>
 
 	<select id="findList" parameterType="Map" resultType="Worker">
@@ -43,6 +43,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="gender!=null">
 				gender = #{gender}
 			</if>
+			<if test="phone!=null">
+				phone = #{phone}
+			</if>
 		</set>
 		 where id=#{id}
 	</update>
@@ -50,5 +53,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="delete" parameterType="long">
 		delete from t_worker where id=#{id}
 	</update>
+
+	<select id="findByPhone" parameterType="String" resultType="Worker">
+		select * from t_worker where phone = #{phone}
+	</select>
 
 </mapper>

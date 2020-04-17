@@ -5,16 +5,16 @@ import com.my.programmer.entity.StuRepai;
 import com.my.programmer.page.Page;
 import com.my.programmer.service.HpRepaiService;
 import com.my.programmer.service.StuRepaiService;
+import com.my.programmer.service.WkRepaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +24,9 @@ public class HpRepaiController {
 
     @Autowired
     HpRepaiService hpRepaiService;
+
+    @Autowired
+    WkRepaiService wkRepaiService;
 
     @RequestMapping("/list")
     public ModelAndView index(ModelAndView model) {
@@ -57,31 +60,36 @@ public class HpRepaiController {
 
     /**
      * 发布任务
-     * @param ids
      * @return
      */
-    @RequestMapping(value = "/setState",method = RequestMethod.POST)
+    @Transactional
+    @RequestMapping(value = "/publish",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,String> setState(
-            @RequestParam(value = "ids[]",defaultValue = "" ,required = false)long[]ids
+    public Map<String,String> publish(
+            @RequestBody StuRepai[] stuRepais
     ) {
         Map<String, String> ret = new HashMap<>();
-        if(ids==null){
+        if(stuRepais==null){
             ret.put("type","error");
             ret.put("msg","数据绑定出错,请联系开发者");
             return  ret;
         }
         long count = 0;
-        for(long id:ids){
-            //count = hpRepaiService.delete(id);
+        for(StuRepai stuRepai:stuRepais){
+            Map<String,Object> map = new HashMap<>();
+            count+=wkRepaiService.setHpStateById(stuRepai.getId());
+            count+=wkRepaiService.setStuStateById(stuRepai.getId());
+            stuRepai.setState("新的任务");
+            stuRepai.setStarttime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            count+=wkRepaiService.add(stuRepai);
         }
-        if(count<=0){
+        if(count<3){
             ret.put("type","error");
-            ret.put("msg","删除失败");
+            ret.put("msg","发布失败");
             return  ret;
         }
         ret.put("type","success");
-        ret.put("msg","删除成功！");
+        ret.put("msg","发布成功！");
         return ret;
     }
 

@@ -48,4 +48,9 @@ public class WorkerServiceImpl implements WorkerService {
     public Worker findByWorkNo(String workNo) {
         return workerDao.findByWorkNo(workNo);
     }
+
+    @Override
+    public Worker findByPhone(String phone) {
+        return workerDao.findByPhone(phone);
+    }
 }

@@ -10,6 +10,15 @@ public class Worker {
     private String password;
     private Integer age;
     private String gender;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public Long getId() {
         return id;
@@ -68,6 +77,7 @@ public class Worker {
                 ", password='" + password + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }

@@ -92,7 +92,12 @@
                     },
                     {"menuid":"7","icon":"","menuname":"报修信息",
                         "menus":[
-                            {"menuid":"51","menuname":"任务列表","icon":"icon-set","url":"../repai/list"},
+                            {"menuid":"51","menuname":"任务列表","icon":"icon-set","url":"../wkrepai/list"},
+                        ]
+                    },
+                    {"menuid":"8","icon":"","menuname":"已接任务",
+                        "menus":[
+                            {"menuid":"51","menuname":"已接任务列表","icon":"icon-set","url":"../accepted/list"},
                         ]
                     }
                 ]};

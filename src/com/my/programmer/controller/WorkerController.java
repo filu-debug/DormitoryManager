@@ -89,6 +89,16 @@ public class WorkerController {
             ret.put("msg","密码不能为空");
             return  ret;
         }
+        if(StringUtils.isEmpty(worker.getPhone())){
+            ret.put("type","error");
+            ret.put("msg","电话不能为空");
+            return  ret;
+        }
+        if((workerService.findByPhone(worker.getPhone()))!=null){
+            ret.put("type","error");
+            ret.put("msg","该号码已存在");
+            return ret;
+        }
         if((workerService.findByWorkNo(worker.getWorkNo()))!=null){
             ret.put("type","error");
             ret.put("msg","该工人已存在");
@@ -135,6 +145,16 @@ public class WorkerController {
             ret.put("type","error");
             ret.put("msg","密码不能为空");
             return  ret;
+        }
+        if(StringUtils.isEmpty(worker.getPhone())){
+            ret.put("type","error");
+            ret.put("msg","电话不能为空");
+            return  ret;
+        }
+        if((workerService.findByPhone(worker.getPhone()))!=null){
+            ret.put("type","error");
+            ret.put("msg","该号码已存在");
+            return ret;
         }
         if(userType.equals("1")){
             Worker existsWorker = workerService.findByWorkNo(worker.getWorkNo());

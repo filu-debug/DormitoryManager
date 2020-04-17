@@ -17,7 +17,7 @@
 		
 		//datagrid初始化 (easyui框架函数，将后台数据填充到ID为dataList的table中)
 	    $('#dataList').datagrid({ 
-	        title:'申请记录',
+	        title:'任务列表',
 	        iconCls:'icon-more',//图标 
 	        border: true, 
 	        collapsible:false,//是否可折叠的 
@@ -36,14 +36,12 @@
 				{field:'chk',checkbox: true,width:50},
  		        {field:'id',title:'ID',width:50, sortable: true},    
  		        {field:'stuName',title:'申请人姓名',width:100, sortable: true},
- 		        {field:'floorNo',title:'所在楼栋',width:80},
+ 		        {field:'floorNo',title:'所在楼栋',width:100},
  		        {field:'dormNo',title:'所在寝室',width:80},
- 		        {field:'phone',title:'联系电话',width:100},
- 		        {field:'retype',title:'维修类别',width:80},
- 		        {field:'state',title:'申请状态',width:100},
- 		        {field:'starttime',title:'发起时间',width:150},
-				{field:'reMan',title:'接取人',width:80},
-				{field:'reManPhone',title:'接取人电话',width:140},
+ 		        {field:'phone',title:'联系电话',width:120},
+ 		        {field:'retype',title:'维修类别',width:70},
+ 		        {field:'state',title:'任务状态',width:100},
+ 		        {field:'starttime',title:'发布时间',width:150},
  		        {field:'discr',title:'具体描述',width:200}
 
 	 		]], 
@@ -73,28 +71,39 @@
 		    	$("#editDialog").dialog("open");
             }
 	    });
-	    //删除
-	    $("#delete").click(function(){
-	    	var selectRows = $("#dataList").datagrid("getSelections");
-        	var selectLength = selectRows.length;
-        	if(selectLength == 0){
-            	$.messager.alert("消息提醒", "请选择数据进行删除!", "warning");
-            } else{
-            	var ids = [];
-            	//将选中的行遍历，取出每行的ID
-            	$(selectRows).each(function(i, row){
-            		ids[i] = row.id;
-            	});
-            	$.messager.confirm("消息提醒", "即将删除该楼管，确认继续？", function(r){
-            		if(r){
-            			$.ajax({
+	    //接取任务
+	    $("#receive").click(function(){
+			var selectRows = $("#dataList").datagrid("getSelections");
+			var selectLength = selectRows.length;
+			if(selectLength == 0){
+				$.messager.alert("消息提醒", "请至少选择一个任务!", "warning");
+			} else{
+				stuRepais = [];
+				//将选中的行遍历,获取每一行
+				$(selectRows).each(function(i, row){
+					stuRepais[i]={
+						"id":row.id,
+						"stuName":row.stuName,
+						"floorNo":row.floorNo,
+						"dormNo":row.dormNo,
+						"phone":row.phone,
+						"retype":row.retype,
+						"state":row.state,
+						"starttime":row.starttime,
+						"discr":row.discr
+					};
+				});
+				$.messager.confirm("消息提醒", "确认接取选中的任务吗？", function(r){
+					if(r){
+						$.ajax({
 							type: "post",
-							url: "delete",
-							data: {ids: ids},
+							url: "receive",
+							data: JSON.stringify(stuRepais),
 							dataType:"json",
+							contentType:"application/json;charset=utf-8",
 							success: function(data){
 								if(data.type == "success"){
-									$.messager.alert("消息提醒","删除成功!","info");
+									$.messager.alert("消息提醒","接取成功!","info");
 									//刷新表格
 									$("#dataList").datagrid("reload");
 									$("#dataList").datagrid("uncheckAll");
@@ -104,16 +113,16 @@
 								}
 							}
 						});
-            		}
-            	});
-            }
+					}
+				});
+			}
 	    });
-	    
+
 	  	//设置添加窗口
 	    $("#addDialog").dialog({
 	    	title: "添加维修申请",
 	    	width: 350,
-	    	height: 360,
+	    	height: 540,
 	    	iconCls: "icon-add",
 	    	modal: true,
 	    	collapsible: false,
@@ -145,13 +154,12 @@
 										//关闭窗口
 										$("#addDialog").dialog("close");
 										//清空原表格数据
-										/*$("#add_stuName").textbox('setValue', "");
+										$("#add_stuName").textbox('setValue', "");
 										$("#add_floorNo").textbox('setValue', "");
 										$("#add_dormNo").textbox('setValue', "");
-										$("#add_phone").textbox('setValue', "");*/
+										$("#add_phone").textbox('setValue', "");
 										$("#add_retype").textbox('setValue', "");
 										$("#add_discr").textbox('setValue', "");
-										$("#add_date").textbox('setValue', "");
 										//重新刷新页面数据
 							  			$('#dataList').datagrid("reload");
 										
@@ -167,13 +175,12 @@
 				
 			],
 			onClose: function(){
-				/*$("#add_stuName").textbox('setValue', "");
+				$("#add_stuName").textbox('setValue', "");
 				$("#add_floorNo").textbox('setValue', "");
 				$("#add_dormNo").textbox('setValue', "");
-				$("#add_phone").textbox('setValue', "");*/
+				$("#add_phone").textbox('setValue', "");
 				$("#add_retype").textbox('setValue', "");
 				$("#add_discr").textbox('setValue', "");
-				$("#add_date").textbox('setValue', "");
 			}
 	    });
 
@@ -302,9 +309,8 @@
 		<div style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a></div>
 			<div style="float: left;" class="datagrid-btn-separator"></div>
 		<div>
-			<a id="delete" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-some-delete',plain:true">删除</a>
+			<a id="receive" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-some-delete',plain:true">接取任务</a>
 		</div>
-
 	</div>
 	
 	<!-- 添加窗口 -->
@@ -312,10 +318,10 @@
    		<form id="addForm" method="post">
 	    	<table id="addTable" border=0 cellpadding="8" >
 
-	    		<%--<tr>
+	    		<tr>
 	    			<td>申请人:</td>
 	    			<td ><input id="add_stuName" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="stuName" data-options="required:true, missingMessage:'请填写姓名'" /></td>
-	    		</tr>--%>
+	    		</tr>
 				<%--<tr>
 					<td>所在楼栋:</td>
 					<td ><input id="add_floorNo" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="floorNo" data-options="required:true, missingMessage:'请填写姓名'" /></td>
@@ -324,10 +330,10 @@
 					<td>所在寝室:</td>
 					<td><select id="add_dormNo" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="gender"><option value="男" selected>男</option><option value="女">女</option></select></td>
 				</tr>--%>
-				<%--<tr>
+				<tr>
 					<td>联系电话:</td>
 					<td><input id="add_phone" class="easyui-textbox" name="phone" style="width: 200px;" data-options="prompt:'请输入正确的电话号码',validType:'phoneNum'" /></td>
-				</tr>--%>
+				</tr>
 				<tr>
 					<td>维修类别:</td>
 					<td>

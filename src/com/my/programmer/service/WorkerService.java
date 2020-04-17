@@ -1,6 +1,7 @@
 package com.my.programmer.service;
 
 import com.my.programmer.entity.Floor;
+import com.my.programmer.entity.Student;
 import com.my.programmer.entity.User;
 import com.my.programmer.entity.Worker;
 import org.springframework.stereotype.Service;
@@ -23,4 +24,6 @@ public interface WorkerService {
     public Integer delete(long id);
 
     public Worker findByWorkNo(String workNo);
+
+    public Worker findByPhone(String phone);
 }

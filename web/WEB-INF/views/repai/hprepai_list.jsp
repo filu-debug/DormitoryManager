@@ -41,7 +41,8 @@
  		        {field:'phone',title:'联系电话',width:150},
  		        {field:'retype',title:'维修类别',width:100},
  		        {field:'state',title:'申请状态',width:100},
- 		        {field:'starttime',title:'申请时间',width:140},
+ 		        {field:'reMan',title:'接取人',width:100},
+ 		        {field:'reManPhone',title:'接取人电话',width:140},
  		        {field:'discr',title:'具体描述',width:100}
 
 	 		]], 
@@ -78,18 +79,29 @@
         	if(selectLength == 0){
             	$.messager.alert("消息提醒", "请至少选择一个任务!", "warning");
             } else{
-            	var ids = [];
+				stuRepais = [];
             	//将选中的行遍历，取出每行的ID
             	$(selectRows).each(function(i, row){
-            		ids[i] = row.id;
+					stuRepais[i]={
+							"id":row.id,
+							"stuName":row.stuName,
+							"floorNo":row.floorNo,
+							"dormNo":row.dormNo,
+							"phone":row.phone,
+							"retype":row.retype,
+							"state":row.state,
+							"starttime":row.starttime,
+							"discr":row.discr
+							};
             	});
             	$.messager.confirm("消息提醒", "确认发布选中的任务吗？", function(r){
             		if(r){
             			$.ajax({
 							type: "post",
-							url: "setState",
-							data: {ids: ids},
+							url: "publish",
+							data: JSON.stringify(stuRepais),
 							dataType:"json",
+							contentType:"application/json;charset=utf-8",
 							success: function(data){
 								if(data.type == "success"){
 									$.messager.alert("消息提醒","发布成功!","info");
@@ -106,13 +118,14 @@
             	});
             }
 	    });
-		//发布任务
+		//拒绝发布
 		$("#letReturn").click(function(){
 			var selectRows = $("#dataList").datagrid("getSelections");
 			var selectLength = selectRows.length;
 			if(selectLength == 0){
 				$.messager.alert("消息提醒", "请至少选择一个任务!", "warning");
 			} else{
+
 				var ids = [];
 				//将选中的行遍历，取出每行的ID
 				$(selectRows).each(function(i, row){

@@ -44,6 +44,7 @@
  		        {field:'name',title:'姓名',width:150},
  		        {field:'age',title:'年龄',width:150},
  		        {field:'gender',title:'性别',width:150},
+ 		        {field:'phone',title:'电话',width:150},
 
 	 		]], 
 	        toolbar: "#toolbar"
@@ -112,7 +113,7 @@
 	    $("#addDialog").dialog({
 	    	title: "添加工人",
 	    	width: 350,
-	    	height: 350,
+	    	height: 390,
 	    	iconCls: "icon-add",
 	    	modal: true,
 	    	collapsible: false,
@@ -148,6 +149,7 @@
 										$("#add_name").textbox('setValue', "");
 										$("#add_age").textbox('setValue', "");
 										$("#add_password").textbox('setValue', "");
+										$("#add_phone").textbox('setValue', "");
 										//重新刷新页面数据
 							  			$('#dataList').datagrid("reload");
 										
@@ -167,6 +169,7 @@
 				$("#add_name").textbox('setValue', "");
 				$("#add_age").textbox('setValue', "");
 				$("#add_password").textbox('setValue', "");
+				$("#add_phone").textbox('setValue', "");
 			}
 	    });
 
@@ -176,7 +179,7 @@
 	  		title: "修改工人信息",
 			<c:if test="${userType=='1'}">
 	    	width: 350,
-	    	height: 350,
+	    	height: 390,
 			</c:if>
 			<c:if test="${userType=='3'}">
 			width: 350,
@@ -238,8 +241,27 @@
 				$("#edit_gender").textbox('setValue', selectRow.gender);
 				$("#edit_age").textbox('setValue', selectRow.age);
 				$("#edit_password").textbox('setValue', selectRow.password);
+				$("#edit_phone").textbox('setValue', selectRow.phone);
 			}
 	    });
+
+		$.extend($.fn.validatebox.defaults.rules, {
+			phoneNum: { //验证手机号
+				validator: function(value, param){
+					b = /^1[3-8]+\d{9}$/.test(value);
+					return b;
+				},
+				message: '请输入正确的手机号码。'
+			},
+			telNum:{ //既验证手机号，又验证座机号
+				validator: function(value, param){
+					b = /(^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$)|(^(()|(\d{3}\-))?(1[358]\d{9})$)/.test(value);
+
+					return b;
+				},
+				message: '请输入正确的电话号码。'
+			}
+		});
 
 	  	//搜索按钮点击事件
 	  	$("#search-btn").on("click",function () {
@@ -299,6 +321,10 @@
 	    			<td>密码:</td>
 	    			<td><input id="add_password" style="width: 200px; height: 30px;" class="easyui-textbox" type="password" name="password" data-options="required:true, missingMessage:'请填写密码'" /></td>
 	    		</tr>
+				<tr>
+					<td>电话:</td>
+					<td><input id="add_phone" class="easyui-textbox" name="phone" style="width: 200px;" data-options="prompt:'请输入正确的电话号码码',validType:'phoneNum'" /></td>
+				</tr>
 	    		
 	    	</table>
 	    </form>
@@ -330,6 +356,10 @@
 				<tr>
 					<td>密码:</td>
 					<td><input id="edit_password" style="width: 200px; height: 30px;" class="easyui-textbox" type="password" name="password" data-options="required:true, missingMessage:'请填写密码'" /></td>
+				</tr>
+				<tr>
+					<td>电话:</td>
+					<td><input id="edit_phone" class="easyui-textbox" name="phone" style="width: 200px;" data-options="prompt:'请输入正确的电话号码码',validType:'phoneNum'" /></td>
 				</tr>
 	    	</table>
 	    </form>

@@ -22,4 +22,6 @@ public interface WorkerDao {
     public Integer delete(long id);
 
     public Worker findByWorkNo(String workNo);
+
+    public Worker findByPhone(String phone);
 }

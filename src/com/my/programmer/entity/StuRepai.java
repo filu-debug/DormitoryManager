@@ -23,9 +23,28 @@ public class StuRepai {
     private String discr;
     //状态
     private String state;
-
     //发起时间
     private String starttime;
+    //任务接取人姓名
+    private String reMan;
+    //任务接取人的电话
+    private String reManPhone;
+
+    public String getReMan() {
+        return reMan;
+    }
+
+    public void setReMan(String reMan) {
+        this.reMan = reMan;
+    }
+
+    public String getReManPhone() {
+        return reManPhone;
+    }
+
+    public void setReManPhone(String reManPhone) {
+        this.reManPhone = reManPhone;
+    }
 
     public String getStarttime() {
         return starttime;
@@ -111,6 +130,8 @@ public class StuRepai {
                 ", discr='" + discr + '\'' +
                 ", state='" + state + '\'' +
                 ", starttime='" + starttime + '\'' +
+                ", reMan='" + reMan + '\'' +
+                ", reManPhone='" + reManPhone + '\'' +
                 '}';
     }
 }
