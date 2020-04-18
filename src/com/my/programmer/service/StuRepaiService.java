@@ -15,4 +15,7 @@ public interface StuRepaiService {
     public List<StuRepai> findList(Map<String,Object> queryMap);
 
     public Integer getTotal(Map<String,Object> queryMap);
+
+    public int deleteThelast();
+
 }

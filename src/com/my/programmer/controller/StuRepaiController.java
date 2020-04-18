@@ -1,21 +1,16 @@
 package com.my.programmer.controller;
 
-import com.my.programmer.entity.HpRepai;
 import com.my.programmer.entity.StuRepai;
 import com.my.programmer.entity.Student;
-import com.my.programmer.entity.Worker;
 import com.my.programmer.page.Page;
 import com.my.programmer.service.HpRepaiService;
 import com.my.programmer.service.StuRepaiService;
 import org.apache.commons.lang.StringUtils;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -69,7 +64,7 @@ public class StuRepaiController {
     @Transactional(rollbackFor = Exception.class)//添加事务控制,任何异常都回滚
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,String> add(StuRepai stuRepai, HpRepai hpRepai, HttpServletRequest request){
+    public Map<String,String> add(StuRepai stuRepai, HttpServletRequest request){
         String userType = (String) request.getSession().getAttribute("userType");
         Map<String,String> ret = new HashMap<>();
         if(stuRepai==null){
@@ -84,16 +79,6 @@ public class StuRepaiController {
             stuRepai.setDormNo(student.getDormNo());
             stuRepai.setPhone(student.getPhone());
         }
-        /*if(StringUtils.isEmpty(stuRepai.getStuName())){
-            ret.put("type","error");
-            ret.put("msg","申请人姓名不能为空");
-            return  ret;
-        }
-        if(StringUtils.isEmpty(stuRepai.getPhone())){
-            ret.put("type","error");
-            ret.put("msg","联系方式不能为空");
-            return  ret;
-        }*/
         if(StringUtils.isEmpty(stuRepai.getRetype())){
             ret.put("type","error");
             ret.put("msg","维修类别不能为空");
@@ -108,14 +93,14 @@ public class StuRepaiController {
         stuRepai.setState("等待审批");
         if(stuRepaiService.add(stuRepai)<=0){
             ret.put("type","error");
-            ret.put("msg","添加失败");
+            ret.put("msg","申请失败");
             return  ret;
         }
         stuRepai.getId();
         stuRepai.setState("新的申请");
         if(hpRepaiService.add(stuRepai)<=0){
             ret.put("type","error");
-            ret.put("msg","添加失败");
+            ret.put("msg","申请失败");
             return  ret;
         }
         ret.put("type","success");

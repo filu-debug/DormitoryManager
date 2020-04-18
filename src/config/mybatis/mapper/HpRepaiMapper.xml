@@ -29,7 +29,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="setStuStateById" parameterType="long">
 		update t_sturepai set state="申请被拒绝" where id=#{id}
 	</update>
+
 	<update id="setHpStateById" parameterType="long">
 		update t_hprepai set state="已拒绝" where id=#{id}
 	</update>
+
+	<select id="findById" resultType="StuRepai">
+		select * from t_hprepai where id=#{id}
+	</select>
 </mapper>

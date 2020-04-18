@@ -341,14 +341,8 @@
 	</table> 
 	<!-- 工具栏 -->
 	<div id="toolbar">
-		<div style="float: left;"><a id="add" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a></div>
-			<div style="float: left;" class="datagrid-btn-separator"></div>
-		<div style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a></div>
-			<div style="float: left;" class="datagrid-btn-separator"></div>
 		<div>
 			<a id="setState" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-some-delete',plain:true">发布任务</a>
-		</div>
-		<div>
 			<a id="letReturn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-some-delete',plain:true">拒绝发布</a>
 		</div>
 	</div>
@@ -362,14 +356,6 @@
 	    			<td>申请人:</td>
 	    			<td ><input id="add_stuName" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="stuName" data-options="required:true, missingMessage:'请填写姓名'" /></td>
 	    		</tr>
-				<%--<tr>
-					<td>所在楼栋:</td>
-					<td ><input id="add_floorNo" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="floorNo" data-options="required:true, missingMessage:'请填写姓名'" /></td>
-				</tr>
-				<tr>
-					<td>所在寝室:</td>
-					<td><select id="add_dormNo" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="gender"><option value="男" selected>男</option><option value="女">女</option></select></td>
-				</tr>--%>
 				<tr>
 					<td>联系电话:</td>
 					<td><input id="add_phone" class="easyui-textbox" name="phone" style="width: 200px;" data-options="prompt:'请输入正确的电话号码',validType:'phoneNum'" /></td>

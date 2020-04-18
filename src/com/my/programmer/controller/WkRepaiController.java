@@ -74,26 +74,35 @@ public class WkRepaiController {
             worker = (Worker) request.getSession().getAttribute("user");
         }
         for(StuRepai stuRepai:stuRepais){
-            Map<String,Object> map = new HashMap<>();
-            map.put("reMan",worker.getName());
-            map.put("reManPhone",worker.getPhone());
-            map.put("id",stuRepai.getId());
-            count+=receiveService.setHpStateById(stuRepai.getId());
-            count+=receiveService.setStuStateById(stuRepai.getId());
-            stuRepai.setState("待完成");
-            stuRepai.setStarttime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-            count+=receiveService.add(stuRepai);
-            count+=receiveService.setHpReManAndReManPhone(map);
-            count+=receiveService.setStuReManAndReManPhone(map);
-            count+=receiveService.setWkstate(stuRepai.getId());
+            StuRepai existsStuRepai = receiveService.findById(stuRepai.getId());
+            if(existsStuRepai==null){
+                Map<String,Object> map = new HashMap<>();
+                map.put("reMan",worker.getName());
+                map.put("reManPhone",worker.getPhone());
+                map.put("id",stuRepai.getId());
+                count+=receiveService.setHpStateById(stuRepai.getId());
+                count+=receiveService.setStuStateById(stuRepai.getId());
+                stuRepai.setState("待完成");
+                stuRepai.setStarttime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                stuRepai.setWorkNo(worker.getWorkNo());
+                count+=receiveService.add(stuRepai);
+                count+=receiveService.setHpReManAndReManPhone(map);
+                count+=receiveService.setStuReManAndReManPhone(map);
+                count+=receiveService.setWkstate(stuRepai.getId());
+            }
         }
         if(count<6){
+            if(count==0){
+                ret.put("type","error");
+                ret.put("msg","该任务您已经接取过了");
+                return  ret;
+            }
             ret.put("type","error");
-            ret.put("msg","发布失败");
+            ret.put("msg","接取失败");
             return  ret;
         }
         ret.put("type","success");
-        ret.put("msg","发布成功！");
+        ret.put("msg","接取成功！");
         return ret;
     }
 }

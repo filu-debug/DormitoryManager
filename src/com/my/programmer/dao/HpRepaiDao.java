@@ -1,6 +1,5 @@
 package com.my.programmer.dao;
 
-import com.my.programmer.entity.HpRepai;
 import com.my.programmer.entity.StuRepai;
 
 import java.util.List;
@@ -19,4 +18,6 @@ public interface HpRepaiDao {
     public Integer setHpStateById(long id);
 
     public Integer letReturnById(long id);
+
+    public StuRepai findById(long id);
 }

@@ -29,6 +29,16 @@ public class StuRepai {
     private String reMan;
     //任务接取人的电话
     private String reManPhone;
+    //工人工号
+    private String workNo;
+
+    public String getWorkNo() {
+        return workNo;
+    }
+
+    public void setWorkNo(String workNo) {
+        this.workNo = workNo;
+    }
 
     public String getReMan() {
         return reMan;
@@ -132,6 +142,7 @@ public class StuRepai {
                 ", starttime='" + starttime + '\'' +
                 ", reMan='" + reMan + '\'' +
                 ", reManPhone='" + reManPhone + '\'' +
+                ", workNo='" + workNo + '\'' +
                 '}';
     }
 }

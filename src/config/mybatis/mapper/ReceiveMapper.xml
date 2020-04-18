@@ -10,12 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="add" parameterType="StuRepai">
-		insert into t_accepted(id,stuName,floorNo,dormNo,phone,retype,discr,state,starttime)
-		values(#{id},#{stuName},#{floorNo},#{dormNo},#{phone},#{retype},#{discr},#{state},#{starttime})
+		insert into t_accepted(id,stuName,floorNo,dormNo,phone,retype,discr,state,starttime,workNo)
+		values(#{id},#{stuName},#{floorNo},#{dormNo},#{phone},#{retype},#{discr},#{state},#{starttime},#{workNo})
 	</update>
 
 	<select id="findList" parameterType="Map" resultType="StuRepai">
-		select * from t_accepted limit #{offset},#{pageSize}
+		select * from t_accepted where workNo=#{workNo} limit #{offset},#{pageSize}
 	</select>
 
 	<select id="getTotal" parameterType="Map" resultType="Integer">
@@ -44,4 +44,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="setWkstate">
 		update t_wkrepai set state="已被接取" where id=#{id}
 	</update>
+
+	<select id="findById" resultType="StuRepai">
+		select * from t_accepted where id=#{id}
+	</select>
+
+	<update id="setStuStateByMap">
+		update t_sturepai set state=#{state} where id=#{id}
+	</update>
+
+	<update id="setHpStateByMap">
+		update t_hprepai set state=#{state} where id=#{id}
+	</update>
+
+	<update id="setWkstateByMap">
+		update t_wkrepai set state=#{state} where id=#{id}
+	</update>
+
+	<update id="setReceivedStateByMap">
+		update t_accepted set state=#{state} where id=#{id}
+	</update>
+
+
+
 </mapper>

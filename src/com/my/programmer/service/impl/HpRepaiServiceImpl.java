@@ -1,7 +1,6 @@
 package com.my.programmer.service.impl;
 
 import com.my.programmer.dao.HpRepaiDao;
-import com.my.programmer.entity.HpRepai;
 import com.my.programmer.entity.StuRepai;
 import com.my.programmer.service.HpRepaiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +42,10 @@ public class HpRepaiServiceImpl implements HpRepaiService {
     @Override
     public Integer letReturnById(long id) {
         return hpRepaiDao.letReturnById(id);
+    }
+
+    @Override
+    public StuRepai findById(long id) {
+        return hpRepaiDao.findById(id);
     }
 }

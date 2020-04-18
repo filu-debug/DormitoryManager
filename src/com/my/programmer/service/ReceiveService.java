@@ -1,6 +1,7 @@
 package com.my.programmer.service;
 
 import com.my.programmer.entity.StuRepai;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -25,4 +26,14 @@ public interface ReceiveService {
     public int setHpReManAndReManPhone(Map<String,Object> map);
 
     public int setWkstate(long id);
+
+    public StuRepai findById(long id);
+
+    public Integer setStuStateByMap(Map<String,Object>  map);
+
+    public Integer setHpStateByMap(Map<String,Object>  map);
+
+    public int setWkstateByMap(Map<String,Object>  map);
+
+    public int setReceivedStateByMap(Map<String,Object>  map);
 }

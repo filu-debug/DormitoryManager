@@ -61,6 +61,16 @@ public class SystemController {
 		model.setViewName("system/login");
 		return model;
 	}
+
+	/**
+	 * 安全退出
+	 * @return
+	 */
+	@RequestMapping("/LoginOut")
+	public String LoginOut(HttpServletRequest request) {
+		request.getSession().setAttribute("user",null);
+		return "redirect:login";
+	}
 	
 	/**
 	 * 登录页面表单提交

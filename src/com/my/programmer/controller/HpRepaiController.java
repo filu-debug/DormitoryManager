@@ -75,15 +75,24 @@ public class HpRepaiController {
             return  ret;
         }
         long count = 0;
+        int length = stuRepais.length;
         for(StuRepai stuRepai:stuRepais){
-            Map<String,Object> map = new HashMap<>();
-            count+=wkRepaiService.setHpStateById(stuRepai.getId());
-            count+=wkRepaiService.setStuStateById(stuRepai.getId());
-            stuRepai.setState("新的任务");
-            stuRepai.setStarttime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-            count+=wkRepaiService.add(stuRepai);
+            StuRepai existsStuRepai = hpRepaiService.findById(stuRepai.getId());
+            if(stuRepai.getState()!="已发布"){
+                Map<String,Object> map = new HashMap<>();
+                count+=wkRepaiService.setHpStateById(stuRepai.getId());
+                count+=wkRepaiService.setStuStateById(stuRepai.getId());
+                stuRepai.setState("新的任务");
+                stuRepai.setStarttime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                count+=wkRepaiService.add(stuRepai);
+            }
         }
         if(count<3){
+            if(count==0&&!stuRepais[0].getState().equals("新的申请")){
+                ret.put("type","error");
+                ret.put("msg","该任务已经发布过了");
+                return  ret;
+            }
             ret.put("type","error");
             ret.put("msg","发布失败");
             return  ret;
@@ -111,11 +120,20 @@ public class HpRepaiController {
             return  ret;
         }
         long count = 0;
+        StuRepai existsStuRepai = null;
         for(long id:ids){
-            count += hpRepaiService.setHpStateById(id);
-            count +=hpRepaiService.setStuStateById(id);
+            existsStuRepai = hpRepaiService.findById(id);
+            if(existsStuRepai==null){
+                count += hpRepaiService.setHpStateById(id);
+                count +=hpRepaiService.setStuStateById(id);
+            }
         }
         if(count<2){
+            if(count==0&&existsStuRepai.getState().equals("已拒绝")){
+                ret.put("type","error");
+                ret.put("msg","该任务已拒绝过了");
+                return  ret;
+            }
             ret.put("type","error");
             ret.put("msg","操作失败");
             return  ret;

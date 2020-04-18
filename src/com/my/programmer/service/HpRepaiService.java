@@ -1,6 +1,5 @@
 package com.my.programmer.service;
 
-import com.my.programmer.entity.HpRepai;
 import com.my.programmer.entity.StuRepai;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +20,6 @@ public interface HpRepaiService {
     public Integer setHpStateById(long id);
 
     public Integer letReturnById(long id);
+
+    public StuRepai findById(long id);
 }

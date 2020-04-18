@@ -14,6 +14,7 @@ public class ReceiveServiceImpl implements ReceiveService {
     @Autowired
     ReceiveDao receiveDao;
 
+
     @Override
     public int add(StuRepai rvRepai) {
         return receiveDao.add(rvRepai);
@@ -53,4 +54,31 @@ public class ReceiveServiceImpl implements ReceiveService {
     public int setWkstate(long id) {
         return receiveDao.setWkstate(id);
     }
+
+    @Override
+    public StuRepai findById(long id) {
+        return receiveDao.findById(id);
+    }
+
+    @Override
+    public Integer setStuStateByMap(Map<String, Object> map) {
+        return receiveDao.setStuStateByMap(map);
+    }
+
+    @Override
+    public Integer setHpStateByMap(Map<String, Object> map) {
+        return receiveDao.setHpStateByMap(map);
+    }
+
+    @Override
+    public int setWkstateByMap(Map<String, Object> map) {
+        return receiveDao.setWkstateByMap(map);
+    }
+
+    @Override
+    public int setReceivedStateByMap(Map<String, Object> map) {
+        return receiveDao.setReceivedStateByMap(map);
+    }
+
+
 }
