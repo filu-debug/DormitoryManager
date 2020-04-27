@@ -16,6 +16,4 @@ public interface StuRepaiService {
 
     public Integer getTotal(Map<String,Object> queryMap);
 
-    public int deleteThelast();
-
 }

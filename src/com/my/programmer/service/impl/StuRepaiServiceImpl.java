@@ -27,4 +27,5 @@ public class StuRepaiServiceImpl implements StuRepaiService {
     public Integer getTotal(Map<String, Object> queryMap) {
         return stuRepaiDao.getTotal(queryMap);
     }
+
 }
