@@ -45,5 +45,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from t_floor where floorType = '女生寝室'
 	</select>
 
+	<select id="queryByFloorFromDorm" resultType="Dormitory">
+		select * from t_dormitory where floorNo = #{floorNo}
+	</select>
+
+	<select id="findFloorById" resultType="Floor">
+		select * from t_floor where id = #{id}
+	</select>
+
 
 </mapper>

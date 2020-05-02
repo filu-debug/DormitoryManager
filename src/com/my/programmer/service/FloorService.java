@@ -1,5 +1,6 @@
 package com.my.programmer.service;
 
+import com.my.programmer.entity.Dormitory;
 import com.my.programmer.entity.Floor;
 import com.my.programmer.entity.HouseParent;
 import org.springframework.stereotype.Service;
@@ -29,4 +30,8 @@ public interface FloorService {
     public List<Floor> getBoyDorms();
 
     public List<Floor> getGrilDorms();
+
+    public List<Dormitory> queryByFloorFromDorm(String floorNo);
+
+    public Floor findFloorById(long id);
 }

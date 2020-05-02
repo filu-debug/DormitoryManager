@@ -42,5 +42,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from t_dormitory
 	</select>
 
+	<select id="queryByIdFromStu" resultType="Dormitory">
+		select * from t_dormitory where id = #{id}
+	</select>
+
+	<select id="findByDormMap" resultType="Student">
+		select * from t_stu where floorNo = #{floorNo} and dormNo = #{dormNo}
+	</select>
+
 
 </mapper>

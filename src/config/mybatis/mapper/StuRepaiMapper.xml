@@ -38,4 +38,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="delete" parameterType="long">
 		delete from t_user where id=#{id}
 	</update>
+
+	<select id="getStateById" resultType="String">
+		select state from t_sturepai where id=#{id}
+	</select>
+
+	<update id="setEval">
+		update t_sturepai  set eval=#{eval} where id = #{id}
+	</update>
+
+	<update id="setEvalToReceive">
+		update t_accepted  set eval=#{eval} where id = #{id}
+	</update>
+
+	<select id="getEvalById" resultType="String">
+		select eval from t_sturepai where id=#{id}
+	</select>
 </mapper>

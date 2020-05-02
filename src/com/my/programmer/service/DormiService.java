@@ -2,6 +2,7 @@ package com.my.programmer.service;
 
 import com.my.programmer.entity.Dormitory;
 import com.my.programmer.entity.Floor;
+import com.my.programmer.entity.Student;
 import com.my.programmer.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,7 @@ public interface DormiService {
 
     public Integer getBedCount(Map<String,Object> map);
 
+    public Dormitory queryByIdFromStu(long id);
 
+    public List<Student> findByDormMap(Map<String,Object> map);
 }

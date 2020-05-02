@@ -28,4 +28,25 @@ public class StuRepaiServiceImpl implements StuRepaiService {
         return stuRepaiDao.getTotal(queryMap);
     }
 
+    @Override
+    public String getStateById(long id) {
+        return stuRepaiDao.getStateById(id);
+    }
+
+    @Override
+    public int setEval(Map<String, Object> map) {
+        return stuRepaiDao.setEval(map);
+    }
+
+    @Override
+    public int setEvalToReceive(Map<String, Object> map) {
+        return stuRepaiDao.setEvalToReceive(map);
+    }
+
+    @Override
+    public String getEvalById(long id) {
+        return stuRepaiDao.getEvalById(id);
+    }
+
+
 }

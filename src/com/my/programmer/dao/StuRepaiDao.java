@@ -14,4 +14,12 @@ public interface StuRepaiDao {
     public List<StuRepai> findList(Map<String,Object> queryMap);
 
     public Integer getTotal(Map<String,Object> queryMap);
+
+    public String getStateById(long id);
+
+    public int setEval(Map<String,Object> map);
+
+    public int setEvalToReceive(Map<String,Object> map);
+
+    public String getEvalById(long id);
 }

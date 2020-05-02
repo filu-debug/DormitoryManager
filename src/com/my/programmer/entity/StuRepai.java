@@ -31,6 +31,16 @@ public class StuRepai {
     private String reManPhone;
     //工人工号
     private String workNo;
+    //评价
+    private String eval;
+
+    public String getEval() {
+        return eval;
+    }
+
+    public void setEval(String eval) {
+        this.eval = eval;
+    }
 
     public String getWorkNo() {
         return workNo;
@@ -139,6 +149,7 @@ public class StuRepai {
                 ", retype='" + retype + '\'' +
                 ", discr='" + discr + '\'' +
                 ", state='" + state + '\'' +
+                ", eval='" + eval + '\'' +
                 ", starttime='" + starttime + '\'' +
                 ", reMan='" + reMan + '\'' +
                 ", reManPhone='" + reManPhone + '\'' +

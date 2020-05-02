@@ -29,17 +29,16 @@
 	        fit: true,//自动大小 
 	        method:"post",
 	        url:"get_list?t="+new Date().getTime(),
-	        idField:'id', 
+	        //idField:'id',
 	        singleSelect:false,//是否单选 
 	        pagination:true,//分页控件 
 	        rownumbers:true,//行号 
-	        sortName:'id',
+	        //sortName:'id',
 	        sortOrder:'DESC', 
 	        remoteSort: false,
 	        //与实体类中属性名一一对应
 	        columns: [[  
 				{field:'chk',checkbox: true,width:50},
- 		        {field:'id',title:'ID',width:50, sortable: true},    
  		        {field:'stuNo',title:'学号',width:130, sortable: true},
  		        {field:'stuName',title:'姓名',width:130},
  		        {field:'gender',title:'性别',width:130},

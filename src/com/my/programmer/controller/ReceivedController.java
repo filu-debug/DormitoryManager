@@ -74,10 +74,11 @@ public class ReceivedController {
             Map<String,Object> map = new HashMap<>();
             map.put("state","已完成");
             map.put("id",stuRepai.getId());
-            count+=receiveService.setStuStateByMap(map);
             count+=receiveService.setHpStateByMap(map);
             count+=receiveService.setWkstateByMap(map);
             count+=receiveService.setReceivedStateByMap(map);
+            map.put("state","默认好评");
+            count+=receiveService.setStuStateByMap(map);
         }
         if(count<4){
             ret.put("type","error");

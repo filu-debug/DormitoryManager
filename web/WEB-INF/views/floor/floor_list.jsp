@@ -24,17 +24,14 @@
 	        fit: true,//自动大小 
 	        method:"post",
 	        url:"get_list?t="+new Date().getTime(),
-	        idField:'id', 
-	        singleSelect:false,//是否单选 
+	        singleSelect:false,//是否单选
 	        pagination:true,//分页控件 
 	        rownumbers:true,//行号 
-	        sortName:'id',
-	        sortOrder:'DESC', 
+	        sortOrder:'DESC',
 	        remoteSort: false,
 	        //与实体类中属性名一一对应
 	        columns: [[  
 				{field:'chk',checkbox: true,width:50},
- 		        {field:'id',title:'ID',width:50, sortable: true},    
  		        {field:'floorNo',title:'楼栋编号',width:150, sortable: true},
  		        {field:'floorType',title:'类型',width:150},
  		        {field:'floorManager',title:'楼管',width:100}

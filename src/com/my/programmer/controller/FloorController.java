@@ -1,5 +1,6 @@
 package com.my.programmer.controller;
 
+import com.my.programmer.entity.Dormitory;
 import com.my.programmer.entity.Floor;
 import com.my.programmer.entity.HouseParent;
 import com.my.programmer.entity.User;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/floor")
@@ -156,6 +158,13 @@ public class FloorController {
         }
         long count = 0;
         for(long id:ids){
+            Floor floor = floorService.findFloorById(id);
+            List<Dormitory> existsDrom = floorService.queryByFloorFromDorm(floor.getFloorNo());
+            if(existsDrom!=null){
+                ret.put("type","error");
+                ret.put("msg","抱歉，请先确定您要删除的寝室中是否有正在使用的寝室");
+                return  ret;
+            }
             count = floorService.delete(id);
         }
         if(count<=0){

@@ -24,22 +24,22 @@
 	        fit: true,//自动大小 
 	        method:"post",
 	        url:"get_list?t="+new Date().getTime(),
-	        idField:'id', 
+	        //idField:'id',
 	        singleSelect:false,//是否单选 
 	        pagination:true,//分页控件 
 	        rownumbers:true,//行号 
-	        sortName:'id',
+	        //sortName:'id',
 	        sortOrder:'DESC', 
 	        remoteSort: false,
 	        //与实体类中属性名一一对应
 	        columns: [[  
 				{field:'chk',checkbox: true,width:50},
- 		        {field:'id',title:'ID',width:50, sortable: true},    
  		        {field:'stuName',title:'申请人姓名',width:100, sortable: true},
  		        {field:'floorNo',title:'所在楼栋',width:100},
  		        {field:'dormNo',title:'所在寝室',width:80},
  		        {field:'phone',title:'联系电话',width:120},
  		        {field:'retype',title:'维修类别',width:70},
+ 		        {field:'eval',title:'评价',width:70},
  		        {field:'state',title:'任务状态',width:100},
  		        {field:'starttime',title:'发布时间',width:150},
  		        {field:'discr',title:'具体描述',width:200}

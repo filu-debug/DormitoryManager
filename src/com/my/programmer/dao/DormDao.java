@@ -2,6 +2,7 @@ package com.my.programmer.dao;
 
 import com.my.programmer.entity.Dormitory;
 import com.my.programmer.entity.Floor;
+import com.my.programmer.entity.Student;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,5 +27,9 @@ public interface DormDao {
     public List<Dormitory> findAll();
 
     public Integer getBedCount(Map<String,Object> map);
+
+    public Dormitory queryByIdFromStu(long id);
+
+    public List<Student> findByDormMap(Map<String,Object> map);
 
 }

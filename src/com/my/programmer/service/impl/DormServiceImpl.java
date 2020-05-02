@@ -3,6 +3,7 @@ package com.my.programmer.service.impl;
 import com.my.programmer.dao.DormDao;
 import com.my.programmer.entity.Dormitory;
 import com.my.programmer.entity.Floor;
+import com.my.programmer.entity.Student;
 import com.my.programmer.service.DormiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,16 @@ public class DormServiceImpl implements DormiService {
     @Override
     public Integer getBedCount(Map<String, Object> map) {
         return dormDao.getBedCount(map);
+    }
+
+    @Override
+    public Dormitory queryByIdFromStu(long id) {
+        return dormDao.queryByIdFromStu(id);
+    }
+
+    @Override
+    public List<Student> findByDormMap(Map<String, Object> map) {
+        return dormDao.findByDormMap(map);
     }
 
 }

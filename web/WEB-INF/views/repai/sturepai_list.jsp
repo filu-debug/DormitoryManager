@@ -24,23 +24,23 @@
 	        fit: true,//自动大小 
 	        method:"post",
 	        url:"get_list?t="+new Date().getTime(),
-	        idField:'id', 
+	        //idField:'id',
 	        singleSelect:false,//是否单选 
 	        pagination:true,//分页控件 
 	        rownumbers:true,//行号 
-	        sortName:'id',
+	        //sortName:'id',
 	        sortOrder:'DESC', 
 	        remoteSort: false,
 	        //与实体类中属性名一一对应
 	        columns: [[  
 				{field:'chk',checkbox: true,width:50},
- 		        {field:'id',title:'ID',width:50, sortable: true},    
  		        {field:'stuName',title:'申请人姓名',width:100, sortable: true},
  		        {field:'floorNo',title:'所在楼栋',width:80},
  		        {field:'dormNo',title:'所在寝室',width:80},
  		        {field:'phone',title:'联系电话',width:100},
  		        {field:'retype',title:'维修类别',width:80},
  		        {field:'state',title:'申请状态',width:100},
+ 		        {field:'eval',title:'评价',width:100},
  		        {field:'starttime',title:'发起时间',width:150},
 				{field:'reMan',title:'接取人',width:80},
 				{field:'reManPhone',title:'接取人电话',width:140},
@@ -178,9 +178,9 @@
 	    });
 
 	  	
-	  	//编辑楼栋信息
+	  	//评价
 	  	$("#editDialog").dialog({
-	  		title: "修改楼栋信息",
+	  		title: "评价",
 	    	width: 350,
 			<c:if test="${userType=='1'}">
 	    	height: 380,
@@ -210,7 +210,7 @@
 							
 							$.ajax({
 								type: "post",
-								url: "edit",
+								url: "eval",
 								data: data,
 								dataType: "json",
 								success: function(data){
@@ -239,12 +239,7 @@
 				var selectRow = $("#dataList").datagrid("getSelected");
 				//设置值
 				$("#edit-id").val(selectRow.id);
-				$("#edit_name").textbox('setValue', selectRow.name);
-				$("#edit_workNo").textbox('setValue', selectRow.workNo);
-				$("#edit_phone").textbox('setValue', selectRow.phone);
-				$("#edit_gender").textbox('setValue', selectRow.gender);
-				$("#edit_floorNo").textbox('setValue', selectRow.floorNo);
-				$("#edit_password").textbox('setValue', selectRow.password);
+				$("#edit_eval").textbox('setValue', selectRow.eval);
 			}
 	    });
 
@@ -299,32 +294,16 @@
 	<div id="toolbar">
 		<div style="float: left;"><a id="add" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新申请</a></div>
 			<div style="float: left;" class="datagrid-btn-separator"></div>
-		<div style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a></div>
+		<div style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">评价</a></div>
 			<div style="float: left;" class="datagrid-btn-separator"></div>
 
 	</div>
 	
-	<!-- 添加窗口 -->
+	<!-- 报修申请窗口 -->
 	<div id="addDialog" style="padding: 10px;">  
    		<form id="addForm" method="post">
 	    	<table id="addTable" border=0 cellpadding="8" >
 
-	    		<%--<tr>
-	    			<td>申请人:</td>
-	    			<td ><input id="add_stuName" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="stuName" data-options="required:true, missingMessage:'请填写姓名'" /></td>
-	    		</tr>--%>
-				<%--<tr>
-					<td>所在楼栋:</td>
-					<td ><input id="add_floorNo" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="floorNo" data-options="required:true, missingMessage:'请填写姓名'" /></td>
-				</tr>
-				<tr>
-					<td>所在寝室:</td>
-					<td><select id="add_dormNo" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="gender"><option value="男" selected>男</option><option value="女">女</option></select></td>
-				</tr>--%>
-				<%--<tr>
-					<td>联系电话:</td>
-					<td><input id="add_phone" class="easyui-textbox" name="phone" style="width: 200px;" data-options="prompt:'请输入正确的电话号码',validType:'phoneNum'" /></td>
-				</tr>--%>
 				<tr>
 					<td>维修类别:</td>
 					<td>
@@ -348,42 +327,13 @@
     	<form id="editForm" method="post">
 			<input type="hidden" name="id" id="edit-id">
 	    	<table id="editTable" cellpadding="8" >
-				<c:if test="${userType=='1'}">
 				<tr>
-					<td>工号:</td>
-					<td ><input id="edit_workNo" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="workNo" data-options="required:true, missingMessage:'请填写工号'" /></td>
-				</tr>
-				<tr>
-					<td>姓名:</td>
-					<td ><input id="edit_name" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="name" data-options="required:true, missingMessage:'请填写姓名'" /></td>
-				</tr>
-				<tr>
-					<td>性别:</td>
-					<td><select id="edit_gender" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="gender"><option value="男" selected>男</option><option value="女">女</option></select></td>
-				</tr>
-				<tr>
-					<td>电话:</td>
-					<td><input id="edit_phone" class="easyui-textbox" name="phone" style="width: 200px;" data-options="prompt:'请输入正确的电话号码码',validType:'phoneNum'" /></td>
-				</tr>
-				<tr>
-					<td>楼栋编号:</td>
-					<td>
-						<select id="edit_floorNo" style="width: 200px; height: 30px;" type="text" name="floorNo" data-options="required:true, missingMessage:'请填写楼栋编号'" >
-							<c:forEach items="${floorList}" var="flo">
-								<option>${flo.floorNo}</option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
-				</c:if>
-				<tr>
-					<td>密码:</td>
-					<td><input id="edit_password" style="width: 200px; height: 30px;" class="easyui-textbox" type="password" name="password" data-options="required:true, missingMessage:'请填写密码'" /></td>
+					<td>评价:</td>
+					<td><select id="edit_eval" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 80, height: 30" name="eval"><option value="优秀" selected>优秀</option><option value="良好">良好</option><option value="一般">一般</option></select></td>
 				</tr>
 	    	</table>
 	    </form>
 	</div>
-	
-	
+
 </body>
 </html>

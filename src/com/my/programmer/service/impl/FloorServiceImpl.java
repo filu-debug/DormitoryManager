@@ -1,6 +1,7 @@
 package com.my.programmer.service.impl;
 
 import com.my.programmer.dao.FloorDao;
+import com.my.programmer.entity.Dormitory;
 import com.my.programmer.entity.Floor;
 import com.my.programmer.entity.HouseParent;
 import com.my.programmer.service.FloorService;
@@ -63,5 +64,15 @@ public class FloorServiceImpl implements FloorService {
     @Override
     public List<Floor> getGrilDorms() {
         return floorDao.getGrilDorms();
+    }
+
+    @Override
+    public List<Dormitory> queryByFloorFromDorm(String floorNo) {
+        return floorDao.queryByFloorFromDorm(floorNo);
+    }
+
+    @Override
+    public Floor findFloorById(long id) {
+        return floorDao.findFloorById(id);
     }
 }

@@ -2,6 +2,7 @@ package com.my.programmer.controller;
 
 import com.my.programmer.entity.StuRepai;
 import com.my.programmer.entity.Student;
+import com.my.programmer.entity.User;
 import com.my.programmer.page.Page;
 import com.my.programmer.service.HpRepaiService;
 import com.my.programmer.service.StuRepaiService;
@@ -105,6 +106,49 @@ public class StuRepaiController {
         }
         ret.put("type","success");
         ret.put("msg","申请完成，请耐心等待管理员处理！");
+        return ret;
+    }
+
+    /**
+     * 评价
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @RequestMapping(value = "/eval",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> edit(String eval,long id){
+        Map<String,String> ret = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
+        if(eval==""||id==0){
+            ret.put("type","error");
+            ret.put("msg","数据绑定出错，请联系管理员！");
+            return ret;
+        }
+
+        String stuState = stuRepaiService.getStateById(id);
+        if(!stuState.equals("已完成")){
+            ret.put("type","error");
+            ret.put("msg","该任务未完成，不能进行评价！");
+            return ret;
+        }
+        String stuEval = stuRepaiService.getEvalById(id);
+        if(!stuEval.equals("默认好评")&&stuEval!=""&&stuEval!=null){
+            ret.put("type","error");
+            ret.put("msg","您已经评价过该任务了！");
+            return ret;
+        }
+        map.put("id",id);
+        map.put("eval",eval);
+        int count = 0;
+        count = stuRepaiService.setEval(map);
+        count += stuRepaiService.setEvalToReceive(map);
+        if(count<2){
+            ret.put("type","error");
+            ret.put("msg","评价出错");
+            return ret;
+        }
+        ret.put("type","success");
+        ret.put("msg","评价成功！");
         return ret;
     }
 }

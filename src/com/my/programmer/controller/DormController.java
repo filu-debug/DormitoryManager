@@ -3,6 +3,7 @@ package com.my.programmer.controller;
 import com.my.programmer.dao.DormDao;
 import com.my.programmer.entity.Dormitory;
 import com.my.programmer.entity.Floor;
+import com.my.programmer.entity.Student;
 import com.my.programmer.page.Page;
 import com.my.programmer.service.DormiService;
 import com.my.programmer.service.FloorService;
@@ -163,6 +164,16 @@ public class DormController {
         }
         long count = 0;
         for(long id:ids){
+            Dormitory dormitory = dormiService.queryByIdFromStu(id);
+            Map<String,Object> map = new HashMap<>();
+            map.put("floorNo",dormitory.getFloorNo());
+            map.put("dormNo",dormitory.getDormNo());
+            List<Student> stuexists = dormiService.findByDormMap(map);
+            if(stuexists!=null){
+                ret.put("type","error");
+                ret.put("msg","抱歉，请先确定您要删除的寝室是否正在使用");
+                return  ret;
+            }
             count = dormiService.delete(id);
         }
         if(count<=0){
