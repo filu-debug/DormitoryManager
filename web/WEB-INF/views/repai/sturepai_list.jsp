@@ -35,8 +35,8 @@
 	        columns: [[  
 				{field:'chk',checkbox: true,width:50},
  		        {field:'stuName',title:'申请人姓名',width:100, sortable: true},
- 		        {field:'floorNo',title:'所在楼栋',width:80},
- 		        {field:'dormNo',title:'所在寝室',width:80},
+ 		        //{field:'floorNo',title:'所在楼栋',width:80},
+ 		        //{field:'dormNo',title:'所在寝室',width:80},
  		        {field:'phone',title:'联系电话',width:100},
  		        {field:'retype',title:'维修类别',width:80},
  		        {field:'state',title:'申请状态',width:100},
@@ -145,13 +145,8 @@
 										//关闭窗口
 										$("#addDialog").dialog("close");
 										//清空原表格数据
-										/*$("#add_stuName").textbox('setValue', "");
-										$("#add_floorNo").textbox('setValue', "");
-										$("#add_dormNo").textbox('setValue', "");
-										$("#add_phone").textbox('setValue', "");*/
-										$("#add_retype").textbox('setValue', "");
-										$("#add_discr").textbox('setValue', "");
-										$("#add_date").textbox('setValue', "");
+										$("#add_retype").textbox('setValue',"");
+										$("#add_discr").textbox('setValue',"");
 										//重新刷新页面数据
 							  			$('#dataList').datagrid("reload");
 										
@@ -167,13 +162,8 @@
 				
 			],
 			onClose: function(){
-				/*$("#add_stuName").textbox('setValue', "");
-				$("#add_floorNo").textbox('setValue', "");
-				$("#add_dormNo").textbox('setValue', "");
-				$("#add_phone").textbox('setValue', "");*/
 				$("#add_retype").textbox('setValue', "");
 				$("#add_discr").textbox('setValue', "");
-				$("#add_date").textbox('setValue', "");
 			}
 	    });
 

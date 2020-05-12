@@ -123,7 +123,7 @@ public class HpRepaiController {
         StuRepai existsStuRepai = null;
         for(long id:ids){
             existsStuRepai = hpRepaiService.findById(id);
-            if(existsStuRepai==null){
+            if(existsStuRepai.getState().equals("新的申请")){
                 count += hpRepaiService.setHpStateById(id);
                 count +=hpRepaiService.setStuStateById(id);
             }

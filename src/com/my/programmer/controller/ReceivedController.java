@@ -5,6 +5,7 @@ import com.my.programmer.entity.Student;
 import com.my.programmer.entity.Worker;
 import com.my.programmer.page.Page;
 import com.my.programmer.service.ReceiveService;
+import com.my.programmer.service.StuRepaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,9 @@ import java.util.Map;
 public class ReceivedController {
     @Autowired
     ReceiveService receiveService;
+
+    @Autowired
+    StuRepaiService stuRepaiService;
 
     @RequestMapping("/list")
     public ModelAndView index(ModelAndView model) {
@@ -77,8 +81,10 @@ public class ReceivedController {
             count+=receiveService.setHpStateByMap(map);
             count+=receiveService.setWkstateByMap(map);
             count+=receiveService.setReceivedStateByMap(map);
-            map.put("state","默认好评");
             count+=receiveService.setStuStateByMap(map);
+            map.put("eval","默认好评");
+            map.put("id",stuRepai.getId());
+            stuRepaiService.setEvalToReceive(map);
         }
         if(count<4){
             ret.put("type","error");

@@ -130,7 +130,7 @@
 		</div>
 	</noscript>
     <div region="north" split="true" border="false" style="overflow: hidden; height: 30px;
-        background: url(images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
+        background:  #7f99be repeat-x center 50%;
         line-height: 20px;color: #fff; font-family: Verdana, 微软雅黑,黑体">
         <c:if test="${userType=='1'}">
         <span style="float:right; padding-right:20px;" class="head"><span style="color:red; font-weight:bold;">${user.username}&nbsp;</span>您好&nbsp;&nbsp;&nbsp;<a href="LoginOut" id="loginOut1">安全退出</a></span>

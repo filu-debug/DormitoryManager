@@ -94,7 +94,7 @@ public class WkRepaiController {
         if(count<6){
             if(count==0){
                 ret.put("type","error");
-                ret.put("msg","该任务您已经接取过了");
+                ret.put("msg","该任务已被接取过了");
                 return  ret;
             }
             ret.put("type","error");
