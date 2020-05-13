@@ -5,10 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <c:if test="${userType==1}">
+    <c:if test="${userType=='1'}">
         <title>学生宿舍管理系统 管理员后台</title>
     </c:if>
-    <c:if test="${userType!=1}">
+    <c:if test="${userType!='1'}">
         <title>学生宿舍管理系统</title>
     </c:if>
     <link rel="shortcut icon" href="favicon.ico"/>
@@ -25,7 +25,7 @@
 	 var _menus = {"menus":[
 						{"menuid":"1","icon":"","menuname":"楼宇管理",
 							"menus":[
-								{"menuid":"21","menuname":"楼宇列表","icon":"icon-house","url":"../floor/list"},
+								{"menuid":"11","menuname":"楼宇列表","icon":"icon-house","url":"../floor/list"},
 							]
 						},
 						{"menuid":"2","icon":"","menuname":"学生信息管理",
@@ -40,22 +40,22 @@
 						},
                          {"menuid":"4","icon":"","menuname":"工人管理",
                              "menus":[
-                                 {"menuid":"31","menuname":"工人列表","icon":"icon-user-student","url":"../worker/list"},
+                                 {"menuid":"41","menuname":"工人列表","icon":"icon-user-student","url":"../worker/list"},
                              ]
                          },
 						{"menuid":"5","icon":"","menuname":"楼管管理",
 							"menus":[
-									{"menuid":"43","menuname":"楼管列表","icon":"icon-book-open","url":"../houseparent/list"}
+									{"menuid":"51","menuname":"楼管列表","icon":"icon-book-open","url":"../houseparent/list"}
 								]
 						},
                          {"menuid":"6","icon":"","menuname":"宿舍管理",
                              "menus":[
-                                 {"menuid":"43","menuname":"宿舍列表","icon":"icon-book-open","url":"../dorm/list"}
+                                 {"menuid":"61","menuname":"宿舍列表","icon":"icon-book-open","url":"../dorm/list"}
                              ]
                          },
 						{"menuid":"7","icon":"","menuname":"系统管理",
 							"menus":[
-							        {"menuid":"51","menuname":"系统设置","icon":"icon-set","url":"SystemServlet?method=toAdminPersonalView"},
+							        {"menuid":"71","menuname":"系统设置","icon":"icon-set","url":"SystemServlet?method=toAdminPersonalView"},
 								]
 						}
 				]};
@@ -67,14 +67,19 @@
     <c:if test="${userType=='2'}">
         <script type="text/javascript">
             var _menus = {"menus":[
-                    {"menuid":"2","icon":"","menuname":"个人",
+                    {"menuid":"8","icon":"","menuname":"个人",
                         "menus":[
-                            {"menuid":"21","menuname":"我的信息","icon":"icon-user-student","url":"../student/list"},
+                            {"menuid":"81","menuname":"我的信息","icon":"icon-user-student","url":"../student/list"},
                         ]
                     },
-                    {"menuid":"7","icon":"","menuname":"报修",
+                    {"menuid":"9","icon":"","menuname":"水电",
                         "menus":[
-                            {"menuid":"51","menuname":"报修申请","icon":"icon-set","url":"../sturepai/list"},
+                            {"menuid":"91","menuname":"水电费余量","icon":"icon-user-student","url":"../ewblance/list"},
+                        ]
+                    },
+                    {"menuid":"10","icon":"","menuname":"报修",
+                        "menus":[
+                            {"menuid":"101","menuname":"报修申请","icon":"icon-set","url":"../sturepai/list"},
                         ]
                     }
                 ]};
@@ -85,19 +90,19 @@
     <c:if test="${userType=='3'}">
         <script type="text/javascript">
             var _menus = {"menus":[
-                    {"menuid":"2","icon":"","menuname":"个人",
+                    {"menuid":"11","icon":"","menuname":"个人",
                         "menus":[
-                            {"menuid":"21","menuname":"我的信息","icon":"icon-user-student","url":"../worker/list"},
+                            {"menuid":"111","menuname":"我的信息","icon":"icon-user-student","url":"../worker/list"},
                         ]
                     },
-                    {"menuid":"7","icon":"","menuname":"报修信息",
+                    {"menuid":"12","icon":"","menuname":"报修信息",
                         "menus":[
-                            {"menuid":"51","menuname":"任务列表","icon":"icon-set","url":"../wkrepai/list"},
+                            {"menuid":"121","menuname":"任务列表","icon":"icon-set","url":"../wkrepai/list"},
                         ]
                     },
-                    {"menuid":"8","icon":"","menuname":"已接任务",
+                    {"menuid":"13","icon":"","menuname":"已接任务",
                         "menus":[
-                            {"menuid":"51","menuname":"已接任务列表","icon":"icon-set","url":"../accepted/list"},
+                            {"menuid":"131","menuname":"已接任务列表","icon":"icon-set","url":"../accepted/list"},
                         ]
                     }
                 ]};
@@ -107,14 +112,19 @@
     <c:if test="${userType=='4'}">
         <script type="text/javascript">
             var _menus = {"menus":[
-                    {"menuid":"2","icon":"","menuname":"个人",
+                    {"menuid":"14","icon":"","menuname":"个人",
                         "menus":[
-                            {"menuid":"21","menuname":"我的信息","icon":"icon-user-student","url":"../houseparent/list"},
+                            {"menuid":"141","menuname":"我的信息","icon":"icon-user-student","url":"../houseparent/list"},
                         ]
                     },
-                    {"menuid":"7","icon":"","menuname":"报修管理",
+                    {"menuid":"15","icon":"","menuname":"水电",
                         "menus":[
-                            {"menuid":"51","menuname":"报修请求列表","icon":"icon-set","url":"../hprepai/list"},
+                            {"menuid":"151","menuname":"水电费余量","icon":"icon-user-student","url":"../ewblance/list"},
+                        ]
+                    },
+                    {"menuid":"16","icon":"","menuname":"报修管理",
+                        "menus":[
+                            {"menuid":"161","menuname":"报修请求列表","icon":"icon-set","url":"../hprepai/list"},
                         ]
                     }
                 ]};
