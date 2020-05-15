@@ -1,10 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>报修申请</title>
+	<title>水电余量</title>
 	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="../easyui/css/demo.css">
@@ -32,20 +32,19 @@
 	        sortOrder:'DESC', 
 	        remoteSort: false,
 	        //与实体类中属性名一一对应
-	        columns: [[  
+	        columns: [[
 				{field:'chk',checkbox: true,width:50},
- 		        {field:'stuName',title:'申请人姓名',width:100, sortable: true},
- 		        //{field:'floorNo',title:'所在楼栋',width:80},
- 		        //{field:'dormNo',title:'所在寝室',width:80},
- 		        {field:'phone',title:'联系电话',width:100},
- 		        {field:'retype',title:'维修类别',width:80},
- 		        {field:'state',title:'申请状态',width:100},
- 		        {field:'eval',title:'评价',width:100},
- 		        {field:'starttime',title:'发起时间',width:150},
+				{field:'stuName',title:'申请人姓名',width:100, sortable: true},
+				//{field:'floorNo',title:'所在楼栋',width:80},
+				//{field:'dormNo',title:'所在寝室',width:80},
+				{field:'phone',title:'联系电话',width:100},
+				{field:'retype',title:'维修类别',width:80},
+				{field:'state',title:'申请状态',width:100},
+				{field:'eval',title:'评价',width:100},
+				{field:'starttime',title:'发起时间',width:150},
 				{field:'reMan',title:'接取人',width:80},
 				{field:'reManPhone',title:'接取人电话',width:140},
- 		        {field:'discr',title:'具体描述',width:200}
-
+				{field:'discr',title:'具体描述',width:200}
 	 		]], 
 	        toolbar: "#toolbar"
 	    }); 
@@ -85,7 +84,7 @@
             	$(selectRows).each(function(i, row){
             		ids[i] = row.id;
             	});
-            	$.messager.confirm("消息提醒", "即将删除该楼管，确认继续？", function(r){
+            	$.messager.confirm("消息提醒", "即将删除该用户，确认继续？", function(r){
             		if(r){
             			$.ajax({
 							type: "post",
@@ -124,7 +123,7 @@
 	    	buttons: [
 				
 	    		{
-					text:'提交',
+					text:'添加',
 					plain: true,
 					iconCls:'icon-user_add',
 					handler:function(){
@@ -167,26 +166,26 @@
 			}
 	    });
 
-	  	
-	  	//评价
-	  	$("#editDialog").dialog({
-	  		title: "评价",
-	    	width: 350,
+
+		//评价
+		$("#editDialog").dialog({
+			title: "评价",
+			width: 350,
 			<c:if test="${userType=='1'}">
-	    	height: 380,
+			height: 380,
 			</c:if>
 			<c:if test="${userType=='4'}">
 			height: 150,
 			</c:if>
-	    	iconCls: "icon-edit",
-	    	modal: true,
-	    	collapsible: false,
-	    	minimizable: false,
-	    	maximizable: false,
-	    	draggable: true,
-	    	closed: true,
-	    	buttons: [
-	    		{
+			iconCls: "icon-edit",
+			modal: true,
+			collapsible: false,
+			minimizable: false,
+			maximizable: false,
+			draggable: true,
+			closed: true,
+			buttons: [
+				{
 					text:'提交',
 					plain: true,
 					iconCls:'icon-edit',
@@ -197,7 +196,7 @@
 							return;
 						} else{
 							var data = $("#editForm").serialize();
-							
+
 							$.ajax({
 								type: "post",
 								url: "eval",
@@ -211,9 +210,9 @@
 										//清空原表格数据（不需要，因为每次都要回显数据）
 
 										//重新刷新页面数据
-							  			$('#dataList').datagrid("reload");
-							  			$('#dataList').datagrid("uncheckAll");
-										
+										$('#dataList').datagrid("reload");
+										$('#dataList').datagrid("uncheckAll");
+
 									} else{
 										$.messager.alert("消息提醒",data.msg,"warning");
 										return;
@@ -231,16 +230,7 @@
 				$("#edit-id").val(selectRow.id);
 				$("#edit_eval").textbox('setValue', selectRow.eval);
 			}
-	    });
-
-	  	/*//搜索按钮点击事件
-	  	$("#search-btn").on("click",function () {
-			$("#dataList").datagrid('reload',{
-				name:$("#search-name").val(),
-				workNo:$("#search-workNo").val()
-			});
-		});*/
-
+		});
 
 		$.extend($.fn.validatebox.defaults.rules, {
 			phoneNum: { //验证手机号
@@ -271,7 +261,6 @@
 			//method: "post",
 		});
 
-
 	});
 	</script>
 </head>
@@ -282,25 +271,28 @@
 	</table> 
 	<!-- 工具栏 -->
 	<div id="toolbar">
-		<div style="float: left;"><a id="add" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新申请</a></div>
-			<div style="float: left;" class="datagrid-btn-separator"></div>
-		<div style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">评价</a></div>
-			<div style="float: left;" class="datagrid-btn-separator"></div>
-
+		<div style="float: left;">
+			<a id="add" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新申请</a>
+		</div>
+		<div style="float: left;" class="datagrid-btn-separator"></div>
+		<div style="float: left;">
+			<a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">评价</a>
+		</div>
+		<div style="float: left;" class="datagrid-btn-separator"></div>
 	</div>
-	
+
 	<!-- 报修申请窗口 -->
-	<div id="addDialog" style="padding: 10px;">  
-   		<form id="addForm" method="post">
-	    	<table id="addTable" border=0 cellpadding="8" >
+	<div id="addDialog" style="padding: 10px;">
+		<form id="addForm" method="post">
+			<table id="addTable" border=0 cellpadding="8" >
 
 				<tr>
 					<td>维修类别:</td>
 					<td>
 						<select id="add_retype" style="width: 200px; height: 30px;" type="text" name="retype" data-options="required:true, missingMessage:'选择维修类别'" >
-								<option>门窗</option>
-								<option>用水</option>
-								<option>电灯</option>
+							<option>门窗</option>
+							<option>用水</option>
+							<option>电灯</option>
 						</select>
 					</td>
 				</tr>
@@ -308,22 +300,23 @@
 					<td>具体描述:</td>
 					<td ><input id="add_discr" style="width: 200px; height: 180px;" class="easyui-textbox" type="text" name="discr" data-options="multiline:true,required:true, missingMessage:'请详细描述设施损坏情况'" /></td>
 				</tr>
-	    	</table>
-	    </form>
+			</table>
+		</form>
 	</div>
-	
+
 	<!-- 修改窗口 -->
 	<div id="editDialog" style="padding: 10px">
-    	<form id="editForm" method="post">
+		<form id="editForm" method="post">
 			<input type="hidden" name="id" id="edit-id">
-	    	<table id="editTable" cellpadding="8" >
+			<table id="editTable" cellpadding="8" >
 				<tr>
 					<td>评价:</td>
 					<td><select id="edit_eval" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 80, height: 30" name="eval"><option value="优秀" selected>优秀</option><option value="良好">良好</option><option value="一般">一般</option></select></td>
 				</tr>
-	    	</table>
-	    </form>
+			</table>
+		</form>
 	</div>
-
+	
+	
 </body>
 </html>

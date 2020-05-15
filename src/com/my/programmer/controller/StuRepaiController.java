@@ -132,7 +132,7 @@ public class StuRepaiController {
             return ret;
         }
         String stuEval = stuRepaiService.getEvalById(id);
-        if(!stuEval.equals("默认好评")&&stuEval!=""&&stuEval!=null){
+        if(!"默认好评".equals(stuEval)&&stuEval!=""&&stuEval!=null){
             ret.put("type","error");
             ret.put("msg","您已经评价过该任务了！");
             return ret;
