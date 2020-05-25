@@ -76,9 +76,9 @@ public class StudentController {
         //rows保存查询到的列表
         //easyui根据rows和total自动计算分页数量
         if("2".equals(userType)){
-            ret.put("rows",studentService.findList(queryMap));
         }else {
 
+            ret.put("rows",studentService.findList(queryMap));
             ret.put("rows",studentService.findList(queryMap));
         }
         ret.put("total",studentService.getTotal(queryMap));
